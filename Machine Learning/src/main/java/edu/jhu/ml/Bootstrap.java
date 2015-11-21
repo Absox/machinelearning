@@ -1,4 +1,4 @@
-package org.jhu.ml;
+package edu.jhu.ml;
 
 /**
  * Created by Ran on 11/19/2015.

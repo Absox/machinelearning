@@ -1,4 +1,4 @@
-package org.jhu.ml.io;
+package edu.jhu.ml.io;
 
 /**
  * Responsible for reading/parsing data from files.

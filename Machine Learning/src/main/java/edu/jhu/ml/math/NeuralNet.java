@@ -1,4 +1,4 @@
-package org.jhu.ml.math;
+package edu.jhu.ml.math;
 
 import java.util.List;
 

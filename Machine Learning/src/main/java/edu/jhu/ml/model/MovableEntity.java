@@ -1,4 +1,4 @@
-package org.jhu.ml.model;
+package edu.jhu.ml.model;
 
 /**
  * Created by Ran on 11/21/2015.
