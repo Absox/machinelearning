@@ -9,16 +9,29 @@ import org.apache.commons.math3.linear.RealVector;
 public abstract class MoveableEntity extends Entity {
 
     /**
-     * Velocity of the entity.
+     * Bearing of the entity.
      */
-    private RealVector velocity;
+    private RealVector bearing;
 
     /**
-     * Accessor for velocity.
-     * @return
+     * Speed at which the entity is moving (in direction of the bearing).
      */
-    public RealVector getVelocity() {
-        return this.velocity;
+    private double speed;
+
+    /**
+     * Accessor for bearing.
+     * @return Bearing of the entity.
+     */
+    public RealVector getBearing() {
+        return this.bearing;
+    }
+
+    /**
+     * Speed at which the entity is moving.
+     * @return Speed of the entity.
+     */
+    public double getSpeed() {
+        return this.speed;
     }
 
 }
