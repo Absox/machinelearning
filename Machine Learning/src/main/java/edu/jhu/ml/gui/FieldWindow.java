@@ -10,12 +10,18 @@ import javax.swing.*;
  */
 public class FieldWindow extends JFrame {
 
-    public FieldWindow(FieldModel model) {
+    /**
+     * Constructs a window for holding a view.
+     * @param title
+     * @param model
+     */
+    public FieldWindow(String title, FieldModel model) {
+        super(title);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         FieldView fieldView = new FieldView(model);
-
-        this.add(fieldView);
+        this.setContentPane(fieldView);
         this.pack();
 
         this.setVisible(true);

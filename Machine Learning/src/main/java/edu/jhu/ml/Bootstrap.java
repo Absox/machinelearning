@@ -15,8 +15,9 @@ public class Bootstrap {
      */
     public static void main(String[] args) {
 
-        OneTurretOneTargetModel model = new OneTurretOneTargetModel();
-        FieldWindow fieldWindow = new FieldWindow(model);
+        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
+
+
 
     }
 

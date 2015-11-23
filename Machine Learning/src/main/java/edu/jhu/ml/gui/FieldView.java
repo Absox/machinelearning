@@ -13,8 +13,15 @@ import java.util.Observer;
  */
 public class FieldView extends JPanel implements Observer {
 
+    private static final int PREFERRED_WIDTH = 1067;
+    private static final int PREFERRED_HEIGHT = 600;
+
     private FieldModel model;
 
+    /**
+     * Constructs a view for a FieldModel.
+     * @param model Model which to watch.
+     */
     public FieldView(FieldModel model) {
         this.setDoubleBuffered(true);
 
@@ -25,10 +32,12 @@ public class FieldView extends JPanel implements Observer {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.white);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        // Clears the frame.
+        g.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        // TODO
+        for(GraphicalRepresentation r : this.model.getDrawables()) {
+            this.draw(r, g);
+        }
     }
 
     /**
@@ -50,9 +59,10 @@ public class FieldView extends JPanel implements Observer {
 
     /**
      * Draws an object.
-     * @param g
+     * @param r Graphical representation of the object to draw.
+     * @param g Graphics context in which to draw it.
      */
-    private void draw(GraphicalRepresentation g) {
+    private void draw(GraphicalRepresentation r, Graphics g) {
         // TODO
     }
 
@@ -61,6 +71,6 @@ public class FieldView extends JPanel implements Observer {
      * @return Preferred size.
      */
     public Dimension getPreferredSize() {
-        return new Dimension(1067, 600);
+        return new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT);
     }
 }
