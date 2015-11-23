@@ -21,9 +21,7 @@ public class Configurations {
      * @return Configurations object.
      */
     public static Configurations getConfigurations() {
-
         return configInstance;
-
     }
 
     /**
