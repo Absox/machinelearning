@@ -1,5 +1,6 @@
 package edu.jhu.ml.model;
 
+import edu.jhu.ml.gui.GraphicalRepresentation;
 import org.apache.commons.math3.linear.RealVector;
 
 /**
@@ -8,6 +9,9 @@ import org.apache.commons.math3.linear.RealVector;
  */
 public abstract class Entity {
 
+    /**
+     * Position of this entity.
+     */
     private RealVector position;
 
     /**
@@ -17,5 +21,11 @@ public abstract class Entity {
     public RealVector getPosition() {
         return this.position;
     }
+
+    /**
+     * Gets the graphical representation for this entity.
+     * @return The graphical representation for this entity.
+     */
+    abstract GraphicalRepresentation getGraphicalRepresentation();
 
 }

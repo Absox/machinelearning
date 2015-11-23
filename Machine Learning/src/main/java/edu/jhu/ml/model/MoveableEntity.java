@@ -8,6 +8,9 @@ import org.apache.commons.math3.linear.RealVector;
  */
 public abstract class MoveableEntity extends Entity {
 
+    /**
+     * Velocity of the entity.
+     */
     private RealVector velocity;
 
     /**
