@@ -26,6 +26,18 @@ public class GraphicalRepresentation {
     private Color color;
 
     /**
+     * Constructor for Graphical representation; pass all fields.
+     * @param position Position of graphical representation.
+     * @param radius Radius of representation.
+     * @param color Color of representation.
+     */
+    public GraphicalRepresentation(RealVector position, double radius, Color color) {
+        this.position = position;
+        this.radius = radius;
+        this.color = color;
+    }
+
+    /**
      * Accessor for position.
      * @return Position of representation.
      */

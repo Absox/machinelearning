@@ -11,12 +11,12 @@ public abstract class MoveableEntity extends Entity {
     /**
      * Bearing of the entity.
      */
-    private RealVector bearing;
+    protected RealVector bearing;
 
     /**
      * Speed at which the entity is moving (in direction of the bearing).
      */
-    private double speed;
+    protected double speed;
 
     /**
      * Accessor for bearing.

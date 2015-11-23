@@ -1,9 +1,7 @@
 package edu.jhu.ml.model;
 
-import edu.jhu.ml.gui.GraphicalRepresentation;
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
-
-import java.util.List;
 
 /**
  * A field model with one turret and one target.
@@ -11,27 +9,26 @@ import java.util.List;
  */
 public class OneTurretOneTargetModel extends FieldModel {
 
+    private Turret turret;
+    private Target target;
+
     /**
-     * Gets a list of all objects that should be visualized within the model.
-     * @return List of all objects that should be visualized.
+     * Initializer for model.
      */
-    public List<GraphicalRepresentation> getDrawables() {
-        return null; // TODO
+    public OneTurretOneTargetModel() {
+        super();
+        double[] values = { 0, 0 };
+        this.turret = new Turret(new ArrayRealVector(values));
+        this.addTurret(this.turret);
+        this.target = new Target();
+        this.addTarget(this.target);
     }
 
     /**
-     * Accessor for turret positions.
-     * @return Turret positions.
+     * Mutator for target position.
+     * @param newPosition New position of target.
      */
-    public List<RealVector> getTurretPositions() {
-        return null; // TODO
-    }
-
-    /**
-     * Accessor for target positions.
-     * @return Target positions.
-     */
-    public List<RealVector> getTargetPositions() {
-        return null;
+    public void setTargetPosition(RealVector newPosition) {
+        this.target.setPosition(newPosition);
     }
 }

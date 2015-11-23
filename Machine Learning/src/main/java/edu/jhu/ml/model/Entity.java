@@ -12,7 +12,7 @@ public abstract class Entity {
     /**
      * Position of this entity.
      */
-    private RealVector position;
+    protected RealVector position;
 
     /**
      * Accessor for position.
@@ -20,6 +20,14 @@ public abstract class Entity {
      */
     public RealVector getPosition() {
         return this.position;
+    }
+
+    /**
+     * Mutator for position.
+     * @param v New position of entity.
+     */
+    public void setPosition(RealVector v) {
+        this.position = v;
     }
 
     /**

@@ -15,6 +15,7 @@ public class FieldView extends JPanel implements Observer {
     private FieldModel model;
 
     public FieldView(FieldModel model) {
+        this.setDoubleBuffered(true);
         this.model = model;
     }
 
