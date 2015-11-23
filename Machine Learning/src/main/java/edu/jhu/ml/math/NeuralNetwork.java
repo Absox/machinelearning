@@ -1,5 +1,8 @@
 package edu.jhu.ml.math;
 
+import edu.jhu.ml.model.Target;
+import edu.jhu.ml.model.Turret;
+
 import java.util.Observable;
 
 /**
@@ -7,6 +10,15 @@ import java.util.Observable;
  * Created by Ran on 11/23/2015.
  */
 public class NeuralNetwork implements TargetingAlgorithm {
+
+    /**
+     * Current turret location.
+     */
+    private Turret turret;
+    /**
+     * Current target location.
+     */
+    private Target target;
 
     public void initialize(Object arg) {
         // TODO
