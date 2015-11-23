@@ -3,6 +3,7 @@ package edu.jhu.ml.gui;
 import edu.jhu.ml.model.FieldModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,7 +17,17 @@ public class FieldView extends JPanel implements Observer {
 
     public FieldView(FieldModel model) {
         this.setDoubleBuffered(true);
+
+        model.addObserver(this);
         this.model = model;
+    }
+
+    /**
+     * Draws the field view.
+     * @param g
+     */
+    public void paint(Graphics g) {
+
     }
 
     /**

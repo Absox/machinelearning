@@ -1,6 +1,7 @@
 package edu.jhu.ml;
 
 import edu.jhu.ml.gui.FieldWindow;
+import edu.jhu.ml.model.OneTurretOneTargetModel;
 
 /**
  * Main class.
@@ -14,7 +15,8 @@ public class Bootstrap {
      */
     public static void main(String[] args) {
 
-        FieldWindow fieldWindow = new FieldWindow();
+        OneTurretOneTargetModel model = new OneTurretOneTargetModel();
+        FieldWindow fieldWindow = new FieldWindow(model);
 
     }
 

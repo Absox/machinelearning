@@ -13,8 +13,8 @@ import java.util.Observable;
  */
 public abstract class FieldModel extends Observable {
 
-    private List<Turret> turrets;
-    private List<Target> targets;
+    protected List<Turret> turrets;
+    protected List<Target> targets;
 
     /**
      * Constructor base. Initializes lists.
