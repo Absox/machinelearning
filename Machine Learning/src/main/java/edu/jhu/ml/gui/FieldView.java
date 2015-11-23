@@ -23,9 +23,12 @@ public class FieldView extends JPanel implements Observer {
     }
 
     protected void paintComponent(Graphics g) {
-        //this.setBackground(Color.BLACK);
+        super.paintComponent(g);
 
-        g.drawString("This is my custom Panel!",10,20);
+        g.setColor(Color.white);
+        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+        // TODO
     }
 
     /**
@@ -33,9 +36,7 @@ public class FieldView extends JPanel implements Observer {
      * @param g
      */
     public void paint(Graphics g) {
-
-        this.setBackground(Color.black);
-
+        super.paint(g);
     }
 
     /**

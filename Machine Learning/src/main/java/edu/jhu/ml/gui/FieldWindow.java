@@ -15,7 +15,7 @@ public class FieldWindow extends JFrame {
 
         FieldView fieldView = new FieldView(model);
 
-        this.setContentPane(fieldView);
+        this.add(fieldView);
         this.pack();
 
         this.setVisible(true);
