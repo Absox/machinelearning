@@ -3,7 +3,6 @@ package edu.jhu.ml.gui;
 import edu.jhu.ml.model.FieldModel;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Window class.
@@ -12,8 +11,14 @@ import java.awt.*;
 public class FieldWindow extends JFrame {
 
     public FieldWindow(FieldModel model) {
-        this.setSize(new Dimension(1067, 600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        FieldView fieldView = new FieldView(model);
+
+        this.setContentPane(fieldView);
+        this.pack();
+
         this.setVisible(true);
+
     }
 }
