@@ -1,5 +1,7 @@
 package edu.jhu.ml;
 
+import edu.jhu.ml.gui.FieldWindow;
+
 /**
  * Main class.
  * Created by Ran on 11/23/2015.
@@ -12,7 +14,8 @@ public class Bootstrap {
      */
     public static void main(String[] args) {
 
-        // TODO
+        FieldWindow fieldWindow = new FieldWindow();
+
     }
 
 }
