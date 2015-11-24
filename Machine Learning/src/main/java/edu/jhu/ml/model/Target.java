@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Target extends MoveableEntity {
 
-    private static final double GRAPHICAL_REPRESENTATION_RADIUS = 20;
+    private double radius = 20;
     private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.RED;
 
     /**
@@ -25,12 +25,20 @@ public class Target extends MoveableEntity {
     }
 
     /**
+     * Accessor for radius.
+     * @return Radius of target.
+     */
+    public double getRadius() {
+        return this.radius;
+    }
+
+    /**
      * Gets how this entity should be drawn on a View.
      * @return GraphicalRepresentation of this object.
      */
     public GraphicalRepresentation getGraphicalRepresentation() {
 
-        return new GraphicalRepresentation(this.position, GRAPHICAL_REPRESENTATION_RADIUS, GRAPHICAL_REPRESENTATION_COLOR);
+        return new GraphicalRepresentation(this.position, radius, GRAPHICAL_REPRESENTATION_COLOR);
 
     }
 }

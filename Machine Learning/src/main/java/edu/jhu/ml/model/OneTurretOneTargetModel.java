@@ -4,6 +4,8 @@ import edu.jhu.ml.math.TargetingAlgorithm;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
+import java.util.Iterator;
+
 /**
  * A field model with one turret and one target.
  * Created by Ran on 11/23/2015.
@@ -72,10 +74,33 @@ public class OneTurretOneTargetModel extends FieldModel {
     public void advance() {
         this.advanceTargets();
         this.advanceProjectiles();
+
+        Iterator<Projectile> projectileIterator = this.projectiles.iterator();
+        while (projectileIterator.hasNext()) {
+
+            Projectile currentProjectile = projectileIterator.next();
+            if (currentProjectile.getPosition().getDistance(this.target.getPosition()) < target.getRadius()/2) {
+                this.hitCounter++;
+                projectileIterator.remove();
+                continue;
+            }
+
+            if (Math.abs(currentProjectile.getPosition().getEntry(0)) > this.width/2) {
+                projectileIterator.remove();
+                continue;
+            }
+            if (Math.abs(currentProjectile.getPosition().getEntry(1)) > this.height / 2) {
+                projectileIterator.remove();
+                continue;
+            }
+
+        }
+
         if (this.shouldFireTurrets()) {
             Projectile candidate = this.turret.fire(this.target, this.projectileSpeed);
             if (candidate != null) {
                 this.projectiles.add(candidate);
+                this.shotCounter++;
             }
         }
 

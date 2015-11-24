@@ -36,6 +36,11 @@ public class FieldView extends JPanel implements Observer {
         for(GraphicalRepresentation r : this.model.getDrawables()) {
             this.draw(r, g);
         }
+
+        g.setColor(Color.black);
+        int hits = this.model.getHitCounter();
+        int shots = this.model.getShotCounter();
+        g.drawString("Accuracy: " + hits + "/" + shots, 10, 10);
     }
 
     /**

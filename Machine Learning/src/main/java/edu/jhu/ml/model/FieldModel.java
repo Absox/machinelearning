@@ -21,6 +21,11 @@ public abstract class FieldModel extends Observable {
     protected double projectileSpeed = 20;
     protected int turretCooldown = 30;
     protected int turretCooldownCounter = turretCooldown;
+    protected int width = 1067;
+    protected int height = 600;
+
+    protected int shotCounter;
+    protected int hitCounter;
 
     /**
      * Constructor base. Initializes lists.
@@ -75,6 +80,22 @@ public abstract class FieldModel extends Observable {
         return result;
     }
 
+    /**
+     * Accessor for # of shots fired.
+     * @return # of shots fired.
+     */
+    public int getShotCounter() {
+        return this.shotCounter;
+    }
+
+    /**
+     * Accessor for # of shots hit.
+     * @return # of shots hit.
+     */
+    public int getHitCounter() {
+        return this.hitCounter;
+    }
+
 
     /**
      * Accessor for turret positions.
@@ -117,8 +138,6 @@ public abstract class FieldModel extends Observable {
     protected void advanceProjectiles() {
         for (Projectile p : this.projectiles) {
             p.advance();
-            // TODO
-            // Check collisions, check for projectiles that we can discard.
         }
     }
 
