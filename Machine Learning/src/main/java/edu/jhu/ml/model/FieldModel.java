@@ -17,6 +17,7 @@ public abstract class FieldModel extends Observable {
     protected List<Turret> turrets;
     protected List<Target> targets;
     protected List<Projectile> projectiles;
+    protected double targetSpeed = 5;
 
     /**
      * Constructor base. Initializes lists.
@@ -25,6 +26,14 @@ public abstract class FieldModel extends Observable {
         this.turrets = new ArrayList<>();
         this.targets = new ArrayList<>();
         this.projectiles = new LinkedList<>();
+    }
+
+    /**
+     * Accessor for target speed.
+     * @return How fast (in pixels per frame) a target should move.
+     */
+    public double getTargetSpeed() {
+        return this.targetSpeed;
     }
 
     /**
@@ -44,8 +53,8 @@ public abstract class FieldModel extends Observable {
     }
 
     /**
-     * A field model.
-     * @return
+     * Gets a list of all drawables within the model.
+     * @return Drawables contained within this model.
      */
     public List<GraphicalRepresentation> getDrawables() {
 
@@ -56,6 +65,9 @@ public abstract class FieldModel extends Observable {
         }
         for (Target t : targets) {
             result.add(t.getGraphicalRepresentation());
+        }
+        for (Projectile p : projectiles) {
+            result.add(p.getGraphicalRepresentation());
         }
         return result;
     }

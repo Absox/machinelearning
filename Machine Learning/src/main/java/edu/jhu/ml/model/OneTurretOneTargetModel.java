@@ -37,7 +37,7 @@ public class OneTurretOneTargetModel extends FieldModel {
      * @return Target of the model.
      */
     public Target getTarget() {
-        return this.getTarget();
+        return this.target;
     }
 
     /**
@@ -50,9 +50,23 @@ public class OneTurretOneTargetModel extends FieldModel {
     }
 
     /**
+     * Moves target towards target position.
+     * @param newPosition Position to move towards.
+     */
+    public void moveTargetTowards(RealVector newPosition) {
+        this.target.moveTowards(newPosition, this.getTargetSpeed());
+        this.setChanged();
+    }
+
+    /**
      * Advances the model one tick.
      */
     public void advance() {
+        // TODO update all moveables.
+        for (Target t : this.targets) {
+            t.advance();
+        }
+        this.setChanged();
         this.notifyObservers();
     }
 }

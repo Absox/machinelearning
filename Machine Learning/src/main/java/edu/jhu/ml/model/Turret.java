@@ -1,6 +1,9 @@
 package edu.jhu.ml.model;
 
 import edu.jhu.ml.gui.GraphicalRepresentation;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.awt.*;
@@ -13,6 +16,11 @@ public class Turret extends Entity {
 
     private static final double GRAPHICAL_REPRESENTATION_RADIUS = 10;
     private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.GREEN;
+
+    public Turret() {
+        double[] values = {0, 0};
+        this.position = new ArrayRealVector(values);
+    }
 
     /**
      * Constructs a Turret at the specified position.
@@ -28,7 +36,9 @@ public class Turret extends Entity {
      * @return Relative position of the target.
      */
     public RealVector getRelativePosition(Target t) {
-        return null;
+        double distance = this.getPosition().getDistance(t.getPosition());
+        double[] values = {this.getPosition().getEntry(0) + distance, this.getPosition().getEntry(1) + 0};
+        return new ArrayRealVector(values);
     }
 
     /**
@@ -37,7 +47,10 @@ public class Turret extends Entity {
      * @return Relative velocity of the target.
      */
     public RealVector getRelativeVelocity(Target t) {
-        return null; // TODO
+        RealVector targetPosition = t.getPosition();
+        double angle = Math.atan2(targetPosition.getEntry(1), targetPosition.getEntry(0));
+        RealMatrix rotationMatrix = rotationMatrix(-angle);
+        return rotationMatrix.operate(t.getVelocity());
     }
 
     /**
@@ -46,5 +59,15 @@ public class Turret extends Entity {
      */
     public GraphicalRepresentation getGraphicalRepresentation() {
         return new GraphicalRepresentation(this.position, GRAPHICAL_REPRESENTATION_RADIUS, GRAPHICAL_REPRESENTATION_COLOR);
+    }
+
+    /**
+     * Computes the 2-dimensional rotation matrix, given an angle.
+     * @param angle Angle in radians.
+     * @return Rotation matrix.
+     */
+    private static RealMatrix rotationMatrix(double angle) {
+        double[][] values = {{Math.cos(angle), -Math.sin(angle)}, {Math.sin(angle), Math.cos(angle)}};
+        return new Array2DRowRealMatrix(values);
     }
 }

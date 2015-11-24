@@ -30,10 +30,12 @@ public class LinearTargeting implements TargetingAlgorithm {
 
     /**
      * Generates a firing solution.
-     * @return
+     * @return Firing solution.
      */
     public FiringSolution fire() {
-        return null; // TODO
+        FiringSolution result = new FiringSolution(turret, target);
+        // TODO
+        return result;
     }
 
     /**

@@ -45,17 +45,29 @@ public class FieldController {
                     int mouseX = e.getX() - view.getWidth()/2;
                     int mouseY = view.getHeight()/2 - e.getY();
                     double[] values = {mouseX, mouseY};
-                    currentModel.setTargetPosition(new ArrayRealVector(values));
-                    currentModel.advance();
+                    currentModel.moveTargetTowards(new ArrayRealVector(values));
                 }
 
                 public void mouseDragged(MouseEvent e) {
 
                 }
-
             });
+
+            Runnable modelUpdater = new Runnable() {
+                public void run() {
+                    while (true) {
+                        try {
+                            currentModel.advance();
+                            Thread.sleep(16);
+                        } catch (InterruptedException e) {
+
+                        }
+                    }
+                }
+            };
+
+            Thread frameLock = new Thread(modelUpdater);
+            frameLock.start();
         }
-
-
     }
 }
