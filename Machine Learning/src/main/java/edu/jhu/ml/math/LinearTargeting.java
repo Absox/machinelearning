@@ -1,5 +1,9 @@
 package edu.jhu.ml.math;
 
+import edu.jhu.ml.model.OneTurretOneTargetModel;
+import edu.jhu.ml.model.Target;
+import edu.jhu.ml.model.Turret;
+
 import java.util.Observable;
 
 /**
@@ -8,12 +12,20 @@ import java.util.Observable;
  */
 public class LinearTargeting implements TargetingAlgorithm {
 
+    private Target target;
+    private Turret turret;
+
     /**
      * Initializes the targeting algorithm.
      * @param arg Parameters with which to initialize.
      */
     public void initialize(Object arg) {
-        // TODO
+        // Initialize target and turret.
+        if (arg instanceof OneTurretOneTargetModel) {
+            OneTurretOneTargetModel model = (OneTurretOneTargetModel)arg;
+            this.target = model.getTarget();
+            this.turret = model.getTurret();
+        }
     }
 
     /**
@@ -30,6 +42,10 @@ public class LinearTargeting implements TargetingAlgorithm {
      * @param arg Arguments passed to notify();
      */
     public void update(Observable o, Object arg) {
-        // TODO
+        if (o instanceof OneTurretOneTargetModel) {
+            OneTurretOneTargetModel model = (OneTurretOneTargetModel)o;
+            this.target = model.getTarget();
+            this.turret = model.getTurret();
+        }
     }
 }

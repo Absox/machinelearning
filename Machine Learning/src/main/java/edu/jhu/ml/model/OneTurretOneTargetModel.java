@@ -25,6 +25,22 @@ public class OneTurretOneTargetModel extends FieldModel {
     }
 
     /**
+     * Accessor for turret.
+     * @return Turret of the model.
+     */
+    public Turret getTurret() {
+        return this.turret;
+    }
+
+    /**
+     * Accessor for target.
+     * @return Target of the model.
+     */
+    public Target getTarget() {
+        return this.getTarget();
+    }
+
+    /**
      * Mutator for target position.
      * @param newPosition New position of target.
      */

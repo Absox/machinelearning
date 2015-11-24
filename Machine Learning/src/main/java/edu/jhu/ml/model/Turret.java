@@ -23,6 +23,24 @@ public class Turret extends Entity {
     }
 
     /**
+     * Calculates the relative position of the target.
+     * @param t Target for which to compute relative position.
+     * @return Relative position of the target.
+     */
+    public RealVector getRelativePosition(Target t) {
+        return null;
+    }
+
+    /**
+     * Gets the target's velocity relative to the turret (pointing directly at the target).
+     * @param t Target for which to compute relative velocity.
+     * @return Relative velocity of the target.
+     */
+    public RealVector getRelativeVelocity(Target t) {
+        return null; // TODO
+    }
+
+    /**
      * Gets how this entity should be drawn in a View.
      * @return Graphical representation for this entity.
      */
