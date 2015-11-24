@@ -24,7 +24,8 @@ public class TargetingVisualizerFacade {
         FieldWindow fieldWindow = new FieldWindow(s, fieldModel);
         this.model = fieldModel;
         this.window = fieldWindow;
-        this.controller = new FieldController(fieldModel);
+        this.controller = new FieldController(fieldModel, fieldWindow);
+        this.controller.invokeMouseControlOfTarget();
     }
 
     /**

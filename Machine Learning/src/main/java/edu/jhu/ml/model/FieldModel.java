@@ -4,6 +4,7 @@ import edu.jhu.ml.gui.GraphicalRepresentation;
 import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 
@@ -15,6 +16,7 @@ public abstract class FieldModel extends Observable {
 
     protected List<Turret> turrets;
     protected List<Target> targets;
+    protected List<Projectile> projectiles;
 
     /**
      * Constructor base. Initializes lists.
@@ -22,6 +24,7 @@ public abstract class FieldModel extends Observable {
     protected FieldModel() {
         this.turrets = new ArrayList<>();
         this.targets = new ArrayList<>();
+        this.projectiles = new LinkedList<>();
     }
 
     /**

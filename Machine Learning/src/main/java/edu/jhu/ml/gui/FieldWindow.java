@@ -10,6 +10,8 @@ import javax.swing.*;
  */
 public class FieldWindow extends JFrame {
 
+    private FieldView view;
+
     /**
      * Constructs a window for holding a view.
      * @param title
@@ -21,10 +23,18 @@ public class FieldWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         FieldView fieldView = new FieldView(model);
+        this.view = fieldView;
         this.setContentPane(fieldView);
         this.pack();
 
         this.setVisible(true);
+    }
 
+    /**
+     * Accessor for the view contained within this window.
+     * @return FieldView contained within this window.
+     */
+    public FieldView getView() {
+        return this.view;
     }
 }
