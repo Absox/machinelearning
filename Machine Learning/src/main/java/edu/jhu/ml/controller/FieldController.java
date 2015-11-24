@@ -27,7 +27,11 @@ public class FieldController {
         this.window = window;
     }
 
+    /**
+     * Invokes mouse control of target.
+     */
     public void invokeMouseControlOfTarget() {
+        // Note: refactor by replacing type-dependent code with State/Strategy design pattern.
         if (model instanceof OneTurretOneTargetModel) {
 
             OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)model;
