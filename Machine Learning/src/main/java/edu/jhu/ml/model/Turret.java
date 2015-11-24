@@ -68,12 +68,19 @@ public class Turret extends Entity {
      * Mutator for targeting algorithm.
      * @param a Targeting algorithm.
      */
-    public void setTargetingAlgorith(TargetingAlgorithm a) {
+    public void setTargetingAlgorithm(TargetingAlgorithm a) {
         this.targetingAlgorithm = a;
     }
 
-    // TODO
+    /**
+     * Fires the turret.
+     * @param t Target to fire at.
+     * @return Projectile.
+     */
     public Projectile fire(Target t) {
+        if (this.targetingAlgorithm != null) {
+
+        }
         return null;
     }
 

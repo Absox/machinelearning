@@ -62,7 +62,8 @@ public class OneTurretOneTargetModel extends FieldModel {
      * @param a Targeting algorithm for the turret.
      */
     public void bindTargetingAlgorithm(TargetingAlgorithm a) {
-
+        this.addObserver(a);
+        this.turret.setTargetingAlgorithm(a);
     }
 
 

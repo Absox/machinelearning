@@ -53,6 +53,7 @@ public class FieldController {
                 }
             });
 
+            // Updates the model at 60 fps
             Runnable modelUpdater = new Runnable() {
                 public void run() {
                     while (true) {
@@ -70,4 +71,6 @@ public class FieldController {
             frameLock.start();
         }
     }
+
+
 }
