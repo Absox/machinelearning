@@ -18,6 +18,13 @@ public class FiringSolution {
     private double offsetRadians;
 
     /**
+     * Constructs a blank firing solution.
+     */
+    public FiringSolution() {
+        this.offsetRadians = 0;
+    }
+
+    /**
      * Constructs a firing solution for the specified turret, onto the specified target.
      * @param turret Turret firing from.
      * @param target Target firing at.
@@ -25,6 +32,7 @@ public class FiringSolution {
     public FiringSolution(Turret turret, Target target) {
         this.turret = turret;
         this.target = target;
+        this.offsetRadians = 0;
     }
 
 

@@ -99,4 +99,16 @@ public abstract class FieldModel extends Observable {
         return result;
     }
 
+    /**
+     * Advances the model one tick.
+     */
+    public void advance() {
+        // TODO update all moveables.
+        for (Target t : this.targets) {
+            t.advance();
+        }
+        this.setChanged();
+        this.notifyObservers();
+    }
+
 }

@@ -46,7 +46,6 @@ public class OneTurretOneTargetModel extends FieldModel {
      */
     public void setTargetPosition(RealVector newPosition) {
         this.target.setPosition(newPosition);
-        this.setChanged();
     }
 
     /**
@@ -55,18 +54,7 @@ public class OneTurretOneTargetModel extends FieldModel {
      */
     public void moveTargetTowards(RealVector newPosition) {
         this.target.moveTowards(newPosition, this.getTargetSpeed());
-        this.setChanged();
     }
 
-    /**
-     * Advances the model one tick.
-     */
-    public void advance() {
-        // TODO update all moveables.
-        for (Target t : this.targets) {
-            t.advance();
-        }
-        this.setChanged();
-        this.notifyObservers();
-    }
+
 }
