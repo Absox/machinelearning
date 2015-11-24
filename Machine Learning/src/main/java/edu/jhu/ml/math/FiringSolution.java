@@ -35,4 +35,12 @@ public class FiringSolution {
         this.offsetRadians = 0;
     }
 
+    /**
+     * Gets the offset for the firing solution.
+     * @return Offset
+     */
+    public double getOffsetRadians() {
+        return this.offsetRadians;
+    }
+
 }

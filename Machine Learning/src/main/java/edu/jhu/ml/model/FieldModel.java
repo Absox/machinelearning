@@ -103,19 +103,29 @@ public abstract class FieldModel extends Observable {
     }
 
     /**
-     * Advances the model one tick.
+     * Advances the targets one tick.
      */
-    public void advance() {
-        // TODO update all moveables.
+    protected void advanceTargets() {
         for (Target t : this.targets) {
             t.advance();
         }
+    }
+
+    /**
+     * Advances projectiles one tick.
+     */
+    protected void advanceProjectiles() {
         for (Projectile p : this.projectiles) {
             p.advance();
         }
+    }
 
-        this.setChanged();
-        this.notifyObservers();
+    /**
+     * Checks if turret cooldown is on.
+     * @return True if we fire.
+     */
+    protected boolean shouldFireTurrets() {
+
     }
 
 }

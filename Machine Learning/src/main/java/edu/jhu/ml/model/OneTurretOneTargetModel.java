@@ -66,5 +66,16 @@ public class OneTurretOneTargetModel extends FieldModel {
         this.turret.setTargetingAlgorithm(a);
     }
 
+    /**
+     * Advances the model one tick.
+     */
+    public void advance() {
+        this.advanceTargets();
+        this.advanceProjectiles();
+
+        this.setChanged();
+        this.notifyObservers();
+    }
+
 
 }

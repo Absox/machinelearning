@@ -1,6 +1,7 @@
 package edu.jhu.ml.model;
 
 import edu.jhu.ml.gui.GraphicalRepresentation;
+import edu.jhu.ml.math.FiringSolution;
 import edu.jhu.ml.math.TargetingAlgorithm;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -79,7 +80,11 @@ public class Turret extends Entity {
      */
     public Projectile fire(Target t, double speed) {
         if (this.targetingAlgorithm != null) {
-
+            FiringSolution f = this.targetingAlgorithm.fire();
+            RealMatrix rotationMatrix = rotationMatrix(f.getOffsetRadians());
+            RealVector displacement = t.getPosition().subtract(this.position);
+            RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);
+            Projectile result = new Projectile(this.position, velocity);
         }
         return null;
     }
