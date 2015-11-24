@@ -19,8 +19,8 @@ public abstract class FieldModel extends Observable {
     protected List<Projectile> projectiles;
     protected double targetSpeed = 5;
     protected double projectileSpeed = 20;
-    protected int turretCooldown = 10;
-    protected int turretCooldownCounter = 10;
+    protected int turretCooldown = 30;
+    protected int turretCooldownCounter = turretCooldown;
 
     /**
      * Constructor base. Initializes lists.
@@ -117,6 +117,8 @@ public abstract class FieldModel extends Observable {
     protected void advanceProjectiles() {
         for (Projectile p : this.projectiles) {
             p.advance();
+            // TODO
+            // Check collisions, check for projectiles that we can discard.
         }
     }
 
@@ -125,7 +127,11 @@ public abstract class FieldModel extends Observable {
      * @return True if we fire.
      */
     protected boolean shouldFireTurrets() {
-
+        if (--this.turretCooldownCounter == 0) {
+            this.turretCooldownCounter = this.turretCooldown;
+            return true;
+        }
+        return false;
     }
 
 }

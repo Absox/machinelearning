@@ -11,14 +11,14 @@ import java.awt.*;
  */
 public class Target extends MoveableEntity {
 
-    private static final double GRAPHICAL_REPRESENTATION_RADIUS = 10;
+    private static final double GRAPHICAL_REPRESENTATION_RADIUS = 20;
     private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.RED;
 
     /**
      * Default constructor for target.
      */
     public Target() {
-        double[] values = {0, 0};
+        double[] values = {0, 250};
         this.speed = 0;
         this.bearing = new ArrayRealVector(values);
         this.position = new ArrayRealVector(values);

@@ -85,6 +85,7 @@ public class Turret extends Entity {
             RealVector displacement = t.getPosition().subtract(this.position);
             RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);
             Projectile result = new Projectile(this.position, velocity);
+            return result;
         }
         return null;
     }

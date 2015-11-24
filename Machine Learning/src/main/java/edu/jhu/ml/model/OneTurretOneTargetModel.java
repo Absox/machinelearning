@@ -72,6 +72,12 @@ public class OneTurretOneTargetModel extends FieldModel {
     public void advance() {
         this.advanceTargets();
         this.advanceProjectiles();
+        if (this.shouldFireTurrets()) {
+            Projectile candidate = this.turret.fire(this.target, this.projectileSpeed);
+            if (candidate != null) {
+                this.projectiles.add(candidate);
+            }
+        }
 
         this.setChanged();
         this.notifyObservers();
