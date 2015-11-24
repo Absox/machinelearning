@@ -31,10 +31,8 @@ public class FieldView extends JPanel implements Observer {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         // Clears the frame.
         g.clearRect(0, 0, this.getWidth(), this.getHeight());
-
         for(GraphicalRepresentation r : this.model.getDrawables()) {
             this.draw(r, g);
         }
@@ -54,7 +52,7 @@ public class FieldView extends JPanel implements Observer {
      * @param arg Arguments.
      */
     public void update(Observable o, Object arg) {
-        // TODO
+        repaint();
     }
 
     /**
@@ -63,9 +61,11 @@ public class FieldView extends JPanel implements Observer {
      * @param g Graphics context in which to draw it.
      */
     private void draw(GraphicalRepresentation r, Graphics g) {
-        // TODO
+
+        int x = this.getWidth()/2 + r.getX() - (int)(r.getRadius() / 2);
+        int y = this.getHeight()/2 - r.getY() - (int)(r.getRadius() / 2);
         g.setColor(r.getColor());
-        g.fillOval(r.getX(), r.getY(), (int)r.getRadius(), (int)r.getRadius());
+        g.fillOval(x, y, (int)r.getRadius(), (int)r.getRadius());
     }
 
     /**
