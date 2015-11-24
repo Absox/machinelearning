@@ -20,7 +20,6 @@ public class TargetingVisualizerFacade {
      * @param s
      */
     public TargetingVisualizerFacade(String s) {
-
         OneTurretOneTargetModel fieldModel = new OneTurretOneTargetModel();
         FieldWindow fieldWindow = new FieldWindow(s, fieldModel);
         this.model = fieldModel;

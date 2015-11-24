@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Turret extends Entity {
 
-    private static final double GRAPHICAL_REPRESENTATION_RADIUS = 5;
+    private static final double GRAPHICAL_REPRESENTATION_RADIUS = 10;
     private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.GREEN;
 
     /**

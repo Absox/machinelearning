@@ -64,6 +64,8 @@ public class FieldView extends JPanel implements Observer {
      */
     private void draw(GraphicalRepresentation r, Graphics g) {
         // TODO
+        g.setColor(r.getColor());
+        g.fillOval(r.getX(), r.getY(), (int)r.getRadius(), (int)r.getRadius());
     }
 
     /**

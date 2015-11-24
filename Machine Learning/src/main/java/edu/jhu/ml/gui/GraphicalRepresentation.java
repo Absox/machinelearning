@@ -38,6 +38,22 @@ public class GraphicalRepresentation {
     }
 
     /**
+     * Accessor for x-component of the position of this representation.
+     * @return X-component of position.
+     */
+    public int getX() {
+        return (int)this.position.getEntry(0);
+    }
+
+    /**
+     * Accessor for y-component of this position.
+     * @return Y-component of position.
+     */
+    public int getY() {
+        return (int)this.position.getEntry(1);
+    }
+
+    /**
      * Accessor for position.
      * @return Position of representation.
      */
