@@ -31,6 +31,12 @@ public class OneTurretOneTargetModel extends FieldModel {
     public void setTargetPosition(RealVector newPosition) {
         this.target.setPosition(newPosition);
         this.setChanged();
+    }
+
+    /**
+     * Advances the model one tick.
+     */
+    public void advance() {
         this.notifyObservers();
     }
 }

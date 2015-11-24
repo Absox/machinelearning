@@ -42,6 +42,7 @@ public class FieldController {
                     int mouseY = view.getHeight()/2 - e.getY();
                     double[] values = {mouseX, mouseY};
                     currentModel.setTargetPosition(new ArrayRealVector(values));
+                    currentModel.advance();
                 }
 
                 public void mouseDragged(MouseEvent e) {
