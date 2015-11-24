@@ -105,7 +105,7 @@ public abstract class MoveableEntity extends Entity {
         } else {
 
             this.setPosition(this.position.add(this.getVelocity()));
-            this.setVelocity(new ArrayRealVector(2)); // Nullify velocity.
+            //this.setVelocity(new ArrayRealVector(2)); // Nullify velocity.
         }
     }
 

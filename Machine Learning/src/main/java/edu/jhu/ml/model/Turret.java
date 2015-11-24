@@ -77,7 +77,7 @@ public class Turret extends Entity {
      * @param t Target to fire at.
      * @return Projectile.
      */
-    public Projectile fire(Target t) {
+    public Projectile fire(Target t, double speed) {
         if (this.targetingAlgorithm != null) {
 
         }

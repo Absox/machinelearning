@@ -18,6 +18,7 @@ public abstract class FieldModel extends Observable {
     protected List<Target> targets;
     protected List<Projectile> projectiles;
     protected double targetSpeed = 5;
+    protected double projectileSpeed = 20;
 
     /**
      * Constructor base. Initializes lists.
@@ -106,6 +107,9 @@ public abstract class FieldModel extends Observable {
         // TODO update all moveables.
         for (Target t : this.targets) {
             t.advance();
+        }
+        for (Projectile p : this.projectiles) {
+            p.advance();
         }
         this.setChanged();
         this.notifyObservers();
