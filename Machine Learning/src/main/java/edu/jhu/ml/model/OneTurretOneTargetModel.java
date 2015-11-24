@@ -1,5 +1,6 @@
 package edu.jhu.ml.model;
 
+import edu.jhu.ml.math.TargetingAlgorithm;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
@@ -54,6 +55,14 @@ public class OneTurretOneTargetModel extends FieldModel {
      */
     public void moveTargetTowards(RealVector newPosition) {
         this.target.moveTowards(newPosition, this.getTargetSpeed());
+    }
+
+    /**
+     * Binds a targeting algorithm to the turret.
+     * @param a Targeting algorithm for the turret.
+     */
+    public void bindTargetingAlgorithm(TargetingAlgorithm a) {
+
     }
 
 

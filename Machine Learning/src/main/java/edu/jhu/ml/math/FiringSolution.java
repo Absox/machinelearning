@@ -35,6 +35,4 @@ public class FiringSolution {
         this.offsetRadians = 0;
     }
 
-
-
 }

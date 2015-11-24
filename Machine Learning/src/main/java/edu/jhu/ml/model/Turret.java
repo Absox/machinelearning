@@ -1,6 +1,7 @@
 package edu.jhu.ml.model;
 
 import edu.jhu.ml.gui.GraphicalRepresentation;
+import edu.jhu.ml.math.TargetingAlgorithm;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -16,6 +17,8 @@ public class Turret extends Entity {
 
     private static final double GRAPHICAL_REPRESENTATION_RADIUS = 10;
     private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.GREEN;
+
+    private TargetingAlgorithm targetingAlgorithm;
 
     public Turret() {
         double[] values = {0, 0};
@@ -59,6 +62,19 @@ public class Turret extends Entity {
      */
     public GraphicalRepresentation getGraphicalRepresentation() {
         return new GraphicalRepresentation(this.position, GRAPHICAL_REPRESENTATION_RADIUS, GRAPHICAL_REPRESENTATION_COLOR);
+    }
+
+    /**
+     * Mutator for targeting algorithm.
+     * @param a Targeting algorithm.
+     */
+    public void setTargetingAlgorith(TargetingAlgorithm a) {
+        this.targetingAlgorithm = a;
+    }
+
+    // TODO
+    public Projectile fire(Target t) {
+        return null;
     }
 
     /**
