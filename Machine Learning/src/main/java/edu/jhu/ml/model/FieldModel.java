@@ -19,6 +19,8 @@ public abstract class FieldModel extends Observable {
     protected List<Projectile> projectiles;
     protected double targetSpeed = 5;
     protected double projectileSpeed = 20;
+    protected int turretCooldown = 10;
+    protected int turretCooldownCounter = 10;
 
     /**
      * Constructor base. Initializes lists.
@@ -111,6 +113,7 @@ public abstract class FieldModel extends Observable {
         for (Projectile p : this.projectiles) {
             p.advance();
         }
+
         this.setChanged();
         this.notifyObservers();
     }

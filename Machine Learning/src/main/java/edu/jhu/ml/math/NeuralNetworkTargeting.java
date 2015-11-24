@@ -9,7 +9,7 @@ import java.util.Observable;
  * Neural network learner.
  * Created by Ran on 11/23/2015.
  */
-public class NeuralNetwork implements TargetingAlgorithm {
+public class NeuralNetworkTargeting implements TargetingAlgorithm {
 
     /**
      * Current turret location.

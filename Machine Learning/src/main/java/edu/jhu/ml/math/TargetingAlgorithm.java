@@ -3,6 +3,7 @@ package edu.jhu.ml.math;
 import java.util.Observer;
 
 /**
+ * Targeting algorithm interface.
  * Created by Ran on 11/23/2015.
  */
 public interface TargetingAlgorithm extends Observer {
