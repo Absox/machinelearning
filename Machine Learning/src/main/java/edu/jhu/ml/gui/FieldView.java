@@ -1,6 +1,7 @@
 package edu.jhu.ml.gui;
 
 import edu.jhu.ml.model.FieldModel;
+import org.apache.commons.math3.linear.RealVector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class FieldView extends JPanel implements Observer {
     private static final int PREFERRED_HEIGHT = 600;
 
     private FieldModel model;
+    private double escapeAngle;
 
     /**
      * Constructs a view for a FieldModel.
@@ -27,6 +29,7 @@ public class FieldView extends JPanel implements Observer {
 
         model.addObserver(this);
         this.model = model;
+        this.escapeAngle = Math.asin(model.getTargetSpeed()/model.getProjectileSpeed());
     }
 
     protected void paintComponent(Graphics g) {
@@ -41,6 +44,7 @@ public class FieldView extends JPanel implements Observer {
         int hits = this.model.getHitCounter();
         int shots = this.model.getShotCounter();
         g.drawString("Accuracy: " + hits + "/" + shots, 10, 10);
+        this.drawMaximumEscapeArc(g);
     }
 
     /**
@@ -71,6 +75,14 @@ public class FieldView extends JPanel implements Observer {
         int y = this.getHeight()/2 - r.getY() - (int)(r.getRadius() / 2);
         g.setColor(r.getColor());
         g.fillOval(x, y, (int)r.getRadius(), (int)r.getRadius());
+    }
+
+    private void drawMaximumEscapeArc(Graphics g) {
+        RealVector targetPosition = this.model.getTargetPositions().get(0);
+        double startingAngle = Math.toDegrees(Math.atan2(targetPosition.getEntry(1), targetPosition.getEntry(0)) - escapeAngle);
+
+        g.setColor(new Color(0f, 0f, 0f, 0.2f));
+        g.fillArc(334, 100, 400, 400, (int)startingAngle, (int)Math.toDegrees(2 * escapeAngle));
     }
 
     /**

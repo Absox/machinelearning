@@ -22,7 +22,7 @@ public class LinearTargeting implements TargetingAlgorithm {
      * Default constructor.
      */
     public LinearTargeting() {
-
+        // Nothing needs doing.
     }
 
     /**
