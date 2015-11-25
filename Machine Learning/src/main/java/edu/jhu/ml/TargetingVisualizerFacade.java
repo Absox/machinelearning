@@ -2,7 +2,7 @@ package edu.jhu.ml;
 
 import edu.jhu.ml.controller.FieldController;
 import edu.jhu.ml.gui.FieldWindow;
-import edu.jhu.ml.math.DirectFireTargeting;
+import edu.jhu.ml.math.LinearTargeting;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
 
@@ -23,7 +23,7 @@ public class TargetingVisualizerFacade {
     public TargetingVisualizerFacade(String s) {
         OneTurretOneTargetModel fieldModel = new OneTurretOneTargetModel();
         FieldWindow fieldWindow = new FieldWindow(s, fieldModel);
-        fieldModel.bindTargetingAlgorithm(new DirectFireTargeting());
+        fieldModel.bindTargetingAlgorithm(new LinearTargeting());
         this.model = fieldModel;
         this.window = fieldWindow;
         this.controller = new FieldController(fieldModel, fieldWindow);

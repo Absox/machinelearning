@@ -65,6 +65,7 @@ public class OneTurretOneTargetModel extends FieldModel {
      */
     public void bindTargetingAlgorithm(TargetingAlgorithm a) {
         this.addObserver(a);
+        a.initialize(this);
         this.turret.setTargetingAlgorithm(a);
     }
 
@@ -93,7 +94,6 @@ public class OneTurretOneTargetModel extends FieldModel {
                 projectileIterator.remove();
                 continue;
             }
-
         }
 
         if (this.shouldFireTurrets()) {
@@ -107,6 +107,5 @@ public class OneTurretOneTargetModel extends FieldModel {
         this.setChanged();
         this.notifyObservers();
     }
-
 
 }

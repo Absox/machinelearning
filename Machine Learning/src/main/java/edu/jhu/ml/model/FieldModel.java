@@ -37,6 +37,14 @@ public abstract class FieldModel extends Observable {
     }
 
     /**
+     * Accessor for projectile speed.
+     * @return How fast a projectile should move (in pixels per frame).
+     */
+    public double getProjectileSpeed() {
+        return this.projectileSpeed;
+    }
+
+    /**
      * Accessor for target speed.
      * @return How fast (in pixels per frame) a target should move.
      */

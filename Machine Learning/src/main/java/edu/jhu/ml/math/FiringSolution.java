@@ -36,8 +36,16 @@ public class FiringSolution {
     }
 
     /**
+     * Mutator for offset for the firing solution.
+     * @param offsetRadians New offset for the firing solution.
+     */
+    public void setOffsetRadians(double offsetRadians) {
+        this.offsetRadians = offsetRadians;
+    }
+
+    /**
      * Gets the offset for the firing solution.
-     * @return Offset
+     * @return Offset for the firing solution.
      */
     public double getOffsetRadians() {
         return this.offsetRadians;
