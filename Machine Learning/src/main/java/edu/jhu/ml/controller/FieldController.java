@@ -2,6 +2,7 @@ package edu.jhu.ml.controller;
 
 import edu.jhu.ml.gui.FieldView;
 import edu.jhu.ml.gui.FieldWindow;
+import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -25,6 +26,14 @@ public class FieldController {
     public FieldController(FieldModel model, FieldWindow window) {
         this.model = model;
         this.window = window;
+    }
+
+    /**
+     * Uses target positions from file.
+     * @param file Data file with target positions.
+     */
+    public void invokeTargetPositionsFromFile(TargetPositionDataFile file) {
+
     }
 
     /**
