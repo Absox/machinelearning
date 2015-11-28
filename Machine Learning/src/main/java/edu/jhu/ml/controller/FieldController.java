@@ -33,7 +33,10 @@ public class FieldController {
      * @param file Data file with target positions.
      */
     public void invokeTargetPositionsFromFile(TargetPositionDataFile file) {
-
+        if (model instanceof OneTurretOneTargetModel) {
+            OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)model;
+            FieldView view = this.window.getView();
+        }
     }
 
     /**
