@@ -53,6 +53,8 @@ public class FieldController {
                         } catch (InterruptedException e) {
                         }
                     }
+
+                    System.out.println("Accuracy: " + currentModel.getHitCounter() + "/" + currentModel.getShotCounter());
                 }
             };
 
