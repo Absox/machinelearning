@@ -6,9 +6,11 @@ import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
 import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.RealVector;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.Iterator;
 
 /**
  * Controller for field.
@@ -36,6 +38,26 @@ public class FieldController {
         if (model instanceof OneTurretOneTargetModel) {
             OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)model;
             FieldView view = this.window.getView();
+
+            // Update model at 60 fps.
+            Runnable modelUpdater = new Runnable() {
+                public void run() {
+                    Iterator<RealVector> dataIterator = file.getPositions().iterator();
+
+                    while (dataIterator.hasNext()) {
+                        try {
+                            RealVector nextPosition = dataIterator.next();
+                            currentModel.moveTargetTowards(nextPosition);
+                            currentModel.advance();
+                            Thread.sleep(16);
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                }
+            };
+
+            Thread frameLock = new Thread(modelUpdater);
+            frameLock.start();
         }
     }
 
