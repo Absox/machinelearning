@@ -1,6 +1,6 @@
 package edu.jhu.ml;
 
-import edu.jhu.ml.controller.FieldController;
+import edu.jhu.ml.controller.GraphicalFieldController;
 import edu.jhu.ml.gui.FieldWindow;
 import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.math.LinearTargeting;
@@ -17,7 +17,7 @@ public class TargetingVisualizerFacade {
 
     private FieldModel model;
     private FieldWindow window;
-    private FieldController controller;
+    private GraphicalFieldController controller;
 
     /**
      * Constructs a facade to handle the components of a targeting algorithm visualizer.
@@ -29,7 +29,7 @@ public class TargetingVisualizerFacade {
         fieldModel.bindTargetingAlgorithm(new LinearTargeting());
         this.model = fieldModel;
         this.window = fieldWindow;
-        this.controller = new FieldController(fieldModel, fieldWindow);
+        this.controller = new GraphicalFieldController(fieldModel, fieldWindow);
         //this.controller.invokeMouseControlOfTarget();
         try {
             this.controller.invokeTargetPositionsFromFile(new TargetPositionDataFile("linear_data.txt"));
@@ -50,7 +50,7 @@ public class TargetingVisualizerFacade {
      * Accessor for the controller.
      * @return Controller for the fieldModel.
      */
-    public FieldController getController() {
+    public GraphicalFieldController getController() {
         return this.controller;
     }
 

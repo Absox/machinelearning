@@ -13,10 +13,10 @@ import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
 
 /**
- * Controller for field.
+ * Controller for field, with GUI.
  * Created by Ran on 11/23/2015.
  */
-public class FieldController {
+public class GraphicalFieldController {
 
     private FieldModel model;
     private FieldWindow window;
@@ -25,9 +25,31 @@ public class FieldController {
      * Constructs a controller for a model.
      * @param model Model which this object controls.
      */
-    public FieldController(FieldModel model, FieldWindow window) {
+    public GraphicalFieldController(FieldModel model, FieldWindow window) {
         this.model = model;
         this.window = window;
+    }
+
+    // TODO Controller code for playback.
+    /**
+     * Resumes the current field.
+     */
+    public void resume() {
+
+    }
+
+    /**
+     * Pauses the current field.
+     */
+    public void pause() {
+
+    }
+
+    /**
+     * Restarts the current playback.
+     */
+    public void restart() {
+
     }
 
     /**
