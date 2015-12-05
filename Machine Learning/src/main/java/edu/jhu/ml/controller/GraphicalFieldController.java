@@ -31,34 +31,8 @@ public class GraphicalFieldController {
         this.playbackController = new GraphicalFieldPlaybackController(this.model);
     }
 
-    // TODO Controller code for playback.
-
-    /**
-     * Toggles playback. If stopped, play. If playing, pause. If paused, play.
-     */
     public void toggle() {
-
-    }
-
-    /**
-     * Starts playback in the current field.
-     */
-    public void play() {
-
-    }
-
-    /**
-     * Pauses the current field.
-     */
-    public void pause() {
-
-    }
-
-    /**
-     * Restarts the current playback.
-     */
-    public void restart() {
-
+        this.playbackController.toggle();
     }
 
     /**
@@ -101,28 +75,9 @@ public class GraphicalFieldController {
         // Note: refactor by replacing type-dependent code with State/Strategy design pattern.
         if (model instanceof OneTurretOneTargetModel) {
 
-            OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)model;
-
             FieldView view = this.window.getView();
 
             view.addMouseMotionListener(new GraphicalFieldMouseController(model, view));
-
-            // Updates the model at 60 fps
-            Runnable modelUpdater = new Runnable() {
-                public void run() {
-                    while (true) {
-                        try {
-                            currentModel.advance();
-                            Thread.sleep(16);
-                        } catch (InterruptedException e) {
-
-                        }
-                    }
-                }
-            };
-
-            Thread frameLock = new Thread(modelUpdater);
-            frameLock.start();
         }
     }
 
