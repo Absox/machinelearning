@@ -87,8 +87,10 @@ public abstract class MoveableEntity extends Entity {
     public void moveTowards(RealVector v, double speed) {
         this.targetPosition = v;
         RealVector displacement = v.subtract(this.position);
-        RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);
-        this.setVelocity(velocity);
+        if (displacement.getNorm() != 0) {
+            RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);
+            this.setVelocity(velocity);
+        }
     }
 
     /**

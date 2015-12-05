@@ -19,7 +19,8 @@ public class GraphicalFieldPlaybackController {
     private TargetPositionDataFile playbackFile;
 
     /**
-     *
+     * Creates a playback controller.
+     * @param model Model whose playback we're controlling.
      */
     public GraphicalFieldPlaybackController(FieldModel model) {
         this.model = model;
@@ -28,6 +29,11 @@ public class GraphicalFieldPlaybackController {
         this.modelUpdater.start();
     }
 
+    /**
+     * Creates a playback controller with file data.
+     * @param model Model whose playback we're controlling.
+     * @param file File from which we're reading target position data.
+     */
     public GraphicalFieldPlaybackController(FieldModel model, TargetPositionDataFile file) {
         this.playbackFile = file;
         this.model = model;
@@ -128,7 +134,6 @@ public class GraphicalFieldPlaybackController {
                     }
                 }
             }
-
         }
 
     }
