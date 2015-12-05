@@ -2,12 +2,9 @@ package edu.jhu.ml;
 
 import edu.jhu.ml.controller.GraphicalFieldController;
 import edu.jhu.ml.gui.FieldWindow;
-import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.math.LinearTargeting;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
-
-import java.io.FileNotFoundException;
 
 /**
  * Facade class for handling initialization of model, gui, and controllers.
@@ -30,12 +27,14 @@ public class TargetingVisualizerFacade {
         this.model = fieldModel;
         this.window = fieldWindow;
         this.controller = new GraphicalFieldController(fieldModel, fieldWindow);
-        //this.controller.invokeMouseControlOfTarget();
+        this.controller.invokeMouseControlOfTarget();
+        /*
         try {
             this.controller.invokeTargetPositionsFromFile(new TargetPositionDataFile("linear_data.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        */
     }
 
     /**

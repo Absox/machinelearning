@@ -5,11 +5,8 @@ import edu.jhu.ml.gui.FieldWindow;
 import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
 
 /**
@@ -20,6 +17,7 @@ public class GraphicalFieldController {
 
     private FieldModel model;
     private FieldWindow window;
+    private GraphicalFieldPlaybackController playbackController;
 
     /**
      * Constructs a controller for a model.
@@ -28,13 +26,24 @@ public class GraphicalFieldController {
     public GraphicalFieldController(FieldModel model, FieldWindow window) {
         this.model = model;
         this.window = window;
+
+        window.addKeyListener(new GraphicalFieldKeyController(this));
+        this.playbackController = new GraphicalFieldPlaybackController(this.model);
     }
 
     // TODO Controller code for playback.
+
     /**
-     * Resumes the current field.
+     * Toggles playback. If stopped, play. If playing, pause. If paused, play.
      */
-    public void resume() {
+    public void toggle() {
+
+    }
+
+    /**
+     * Starts playback in the current field.
+     */
+    public void play() {
 
     }
 
@@ -96,20 +105,7 @@ public class GraphicalFieldController {
 
             FieldView view = this.window.getView();
 
-            view.addMouseMotionListener(new MouseMotionListener() {
-
-                public void mouseMoved(MouseEvent e) {
-
-                    int mouseX = e.getX() - view.getWidth()/2;
-                    int mouseY = view.getHeight()/2 - e.getY();
-                    double[] values = {mouseX, mouseY};
-                    currentModel.moveTargetTowards(new ArrayRealVector(values));
-                }
-
-                public void mouseDragged(MouseEvent e) {
-
-                }
-            });
+            view.addMouseMotionListener(new GraphicalFieldMouseController(model, view));
 
             // Updates the model at 60 fps
             Runnable modelUpdater = new Runnable() {
