@@ -36,6 +36,13 @@ public class GraphicalFieldController {
     }
 
     /**
+     * Ends playback.
+     */
+    public void stop() {
+        this.playbackController.stop();
+    }
+
+    /**
      * Uses target positions from file.
      * @param file Data file with target positions.
      */

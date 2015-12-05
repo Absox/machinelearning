@@ -22,11 +22,23 @@ public class Bootstrap {
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.println("Error in parsing options: " + e.getMessage());
+            printHelp();
+            return;
         }
 
         TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
 
+    }
+
+    private static void printHelp() {
+        HelpFormatter help = new HelpFormatter();
+        help.printHelp("Usage guide:", options);
+    }
+
+    private static void registerOptions() {
+        Option positionsFile = new Option("f", "file", false, "Target position data file");
+        options.addOption(positionsFile);
     }
 
 }

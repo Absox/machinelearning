@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
+ * Keyboard controller for our GraphicalFieldController.
  * Created by Ran on 12/5/2015.
  */
 public class GraphicalFieldKeyController implements KeyListener {
@@ -23,11 +24,14 @@ public class GraphicalFieldKeyController implements KeyListener {
      * @param e Key press event.
      */
     public void keyPressed(KeyEvent e) {
-
-        if (e.getKeyChar() == ' ') {
-            this.controller.toggle();
+        switch (e.getKeyChar()) {
+            case ' ':
+                this.controller.toggle();
+                break;
+            case 's':
+                this.controller.stop();
+                break;
         }
-
     }
 
     /**

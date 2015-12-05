@@ -62,17 +62,12 @@ public class GraphicalFieldPlaybackController {
     }
 
     /**
-     * Pauses playback.
+     * Stops playback.
      */
-    public void pause() {
-
-    }
-
-    /**
-     * Starts playback.
-     */
-    public void play() {
-
+    public void stop() {
+        this.state = GraphicalFieldControllerState.STOPPED;
+        this.modelUpdater.interrupt();
+        System.out.println("Accuracy: " + this.model.getHitCounter() + "/" + this.model.getShotCounter());
     }
 
     /**
@@ -122,6 +117,7 @@ public class GraphicalFieldPlaybackController {
                         // Do nothing.
                     }
                 }
+                this.controller.stop();
             } else {
                 while (true) {
                     try {
