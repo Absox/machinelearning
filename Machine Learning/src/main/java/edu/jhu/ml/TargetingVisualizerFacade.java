@@ -32,7 +32,7 @@ public class TargetingVisualizerFacade {
         this.controller = new GraphicalFieldController(fieldModel, fieldWindow);
         //this.controller.invokeMouseControlOfTarget();
         try {
-            this.controller.invokeTargetPositionsFromFile(new TargetPositionDataFile("linear_data.txt"));
+            this.controller.invokeTargetPositionsFromFile(new TargetPositionDataFile("circular_data.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
