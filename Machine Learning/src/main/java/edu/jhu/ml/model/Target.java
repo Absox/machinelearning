@@ -18,7 +18,7 @@ public class Target extends MoveableEntity {
      * Default constructor for target.
      */
     public Target() {
-        double[] values = {0, 250};
+        double[] values = {-5, 200};
         this.speed = 0;
         this.bearing = new ArrayRealVector(values);
         this.position = new ArrayRealVector(values);

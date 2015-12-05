@@ -3,6 +3,9 @@ package edu.jhu.ml.controller;
 import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
+import org.apache.commons.math3.linear.RealVector;
+
+import java.util.Iterator;
 
 /**
  * Controller for playback in a Graphical field.
@@ -22,6 +25,14 @@ public class GraphicalFieldPlaybackController {
         this.model = model;
         this.state = GraphicalFieldControllerState.STOPPED;
         this.modelUpdater = new Thread(new GraphicalFieldPlaybackRunnable(this.model, this));
+        this.modelUpdater.start();
+    }
+
+    public GraphicalFieldPlaybackController(FieldModel model, TargetPositionDataFile file) {
+        this.playbackFile = file;
+        this.model = model;
+        this.state = GraphicalFieldControllerState.STOPPED;
+        this.modelUpdater = new Thread(new GraphicalFieldPlaybackRunnable(this.model, this, file));
         this.modelUpdater.start();
     }
 
@@ -69,6 +80,7 @@ public class GraphicalFieldPlaybackController {
 
         private GraphicalFieldPlaybackController controller;
         private FieldModel model;
+        private TargetPositionDataFile playbackFile;
 
 
         public GraphicalFieldPlaybackRunnable(FieldModel model, GraphicalFieldPlaybackController controller) {
@@ -76,17 +88,47 @@ public class GraphicalFieldPlaybackController {
             this.controller = controller;
         }
 
+        public GraphicalFieldPlaybackRunnable(FieldModel model, GraphicalFieldPlaybackController controller, TargetPositionDataFile file) {
+            this.model = model;
+            this.controller = controller;
+            this.playbackFile = file;
+            System.out.println("Creating controller with file");
+        }
+
         public void run() {
-            while (true) {
-                try {
-                    if (this.controller.getState() == GraphicalFieldControllerState.STARTED) {
-                        ((OneTurretOneTargetModel) this.model).advance();
+            OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)this.model;
+            if (this.playbackFile != null) {
+                Iterator<RealVector> dataIterator = this.playbackFile.getPositions().iterator();
+                while (true) {
+                    try {
+                        if (this.controller.getState() == GraphicalFieldControllerState.STARTED) {
+                            if (dataIterator.hasNext()) {
+
+                                RealVector nextPosition = dataIterator.next();
+                                currentModel.moveTargetTowards(nextPosition);
+                                currentModel.advance();
+                            } else {
+                                break;
+                            }
+                        }
+                        Thread.sleep(16);
+                    } catch (InterruptedException e) {
+                        // Do nothing.
                     }
-                    Thread.sleep(16);
-                } catch (InterruptedException e) {
-                    // Do nothing
+                }
+            } else {
+                while (true) {
+                    try {
+                        if (this.controller.getState() == GraphicalFieldControllerState.STARTED) {
+                            currentModel.advance();
+                        }
+                        Thread.sleep(16);
+                    } catch (InterruptedException e) {
+                        // Do nothing
+                    }
                 }
             }
+
         }
 
     }
