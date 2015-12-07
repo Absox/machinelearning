@@ -30,13 +30,6 @@ public class TargetingVisualizerFacade {
         this.model = fieldModel;
         this.window = fieldWindow;
         this.controller = new GraphicalFieldController(fieldModel, fieldWindow);
-        //this.controller.invokeMouseControlOfTarget();
-        try {
-            this.controller.invokeTargetPositionsFromFile(new TargetPositionDataFile("circular_data.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**
@@ -53,6 +46,25 @@ public class TargetingVisualizerFacade {
      */
     public GraphicalFieldController getController() {
         return this.controller;
+    }
+
+    /**
+     * Invokes file control.
+     * @param filename Name of file.
+     */
+    public void invokeFileControl(String filename) {
+        try {
+            this.controller.invokeTargetPositionsFromFile(new TargetPositionDataFile(filename));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Invokes mouse control.
+     */
+    public void invokeMouseControl() {
+        this.controller.invokeMouseControlOfTarget();
     }
 
 }

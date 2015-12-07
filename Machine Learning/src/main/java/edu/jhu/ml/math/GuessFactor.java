@@ -6,6 +6,4 @@ package edu.jhu.ml.math;
  */
 public class GuessFactor {
 
-
-
 }

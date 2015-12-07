@@ -31,11 +31,17 @@ public class Bootstrap {
 
     }
 
+    /**
+     * Prints usage guide.
+     */
     private static void printHelp() {
         HelpFormatter help = new HelpFormatter();
         help.printHelp("Usage guide:", options);
     }
 
+    /**
+     * Registers command-line options.
+     */
     private static void registerOptions() {
         Option positionsFile = new Option("f", "file", false, "Target position data file");
         options.addOption(positionsFile);
