@@ -54,6 +54,26 @@ public class SingleHiddenLayerNeuralNetwork {
     }
 
     /**
+     * Classifies the input.
+     * @param inputs Input values.
+     * @return Index of the class.
+     */
+    public int getClass(double[] inputs) {
+        if (inputs.length != numInputs) return -1;
+        double[] outputs = this.getOutput(inputs);
+
+        int index = 0;
+        double currentMax = outputs[0];
+        for (int c = 1; c < numInputs; c++) {
+            if (outputs[c] > currentMax) {
+                currentMax = outputs[c];
+                index = c;
+            }
+        }
+        return index;
+    }
+
+    /**
      * Gets the output of this neural net for a given input.
      * @param inputs Array of inputs.
      * @return Output of the neural net.
