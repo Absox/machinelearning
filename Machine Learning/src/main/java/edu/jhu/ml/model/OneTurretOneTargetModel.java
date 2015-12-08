@@ -86,11 +86,7 @@ public class OneTurretOneTargetModel extends FieldModel {
                 continue;
             }
 
-            if (Math.abs(currentProjectile.getPosition().getEntry(0)) > this.width/2) {
-                projectileIterator.remove();
-                continue;
-            }
-            if (Math.abs(currentProjectile.getPosition().getEntry(1)) > this.height / 2) {
+            if (currentProjectile.isOutOfFieldBounds(this)) {
                 projectileIterator.remove();
                 continue;
             }

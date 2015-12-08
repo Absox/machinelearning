@@ -111,4 +111,11 @@ public abstract class MoveableEntity extends Entity {
         }
     }
 
+    public boolean isOutOfFieldBounds(FieldModel model) {
+        if (Math.abs(this.position.getEntry(0)) > model.width/2 || Math.abs(this.position.getEntry(1)) > model.height/2) {
+            return true;
+        }
+        return false;
+    }
+
 }

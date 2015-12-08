@@ -28,6 +28,7 @@ public class Bootstrap {
         }
 
         TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
+        facade.invokeFileControl("circular_data.txt");
 
     }
 
