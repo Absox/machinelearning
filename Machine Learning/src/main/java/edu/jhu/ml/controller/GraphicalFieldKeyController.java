@@ -26,10 +26,13 @@ public class GraphicalFieldKeyController implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyChar()) {
             case ' ':
-                this.controller.toggle();
+                this.controller.togglePlayback();
                 break;
             case 's':
                 this.controller.stop();
+                break;
+            case 'r':
+                this.controller.toggleRecording();
                 break;
         }
     }

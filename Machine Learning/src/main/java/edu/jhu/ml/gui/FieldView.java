@@ -97,6 +97,7 @@ public class FieldView extends JPanel implements Observer {
      */
     public void toggleRecordingFlag() {
         this.isRecording = !this.isRecording;
+        repaint();
     }
 
     /**

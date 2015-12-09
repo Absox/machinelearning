@@ -3,6 +3,9 @@ package edu.jhu.ml.io;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
 import org.apache.commons.math3.linear.RealVector;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -23,6 +26,17 @@ public class PositionRecorder implements Observer {
     }
 
     /**
+     * Toggles recording.
+     */
+    public void toggle() {
+        if (this.isRecording) {
+            this.stop();
+        } else {
+            this.start();
+        }
+    }
+
+    /**
      * Starts recording.
      */
     public void start() {
@@ -35,16 +49,12 @@ public class PositionRecorder implements Observer {
      */
     public void stop() {
         this.isRecording = false;
-        /*
-        System.out.println("Filename to write to:");
+        System.out.println("Output filename:");
         Scanner keyboard = new Scanner(System.in);
         String filename = keyboard.nextLine();
         keyboard.close();
         this.flushToFile(filename);
-        */
-        for (RealVector v : this.positions) {
-            System.out.println(v);
-        }
+
     }
 
     /**
@@ -64,6 +74,19 @@ public class PositionRecorder implements Observer {
      * @param filename Filename of output file.
      */
     public void flushToFile(String filename) {
+        try {
+            PrintWriter fileWriter = new PrintWriter(new File(filename));
 
+            for (RealVector v : this.positions) {
+                for (int c = 0; c < v.getDimension(); c++) {
+                    fileWriter.printf("%f\t", v.getEntry(c));
+                }
+                fileWriter.println();
+            }
+
+            fileWriter.close();
+        } catch (FileNotFoundException e) {
+
+        }
     }
 }

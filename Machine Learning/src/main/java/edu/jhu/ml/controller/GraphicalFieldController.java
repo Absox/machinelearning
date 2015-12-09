@@ -33,9 +33,19 @@ public class GraphicalFieldController {
     }
 
     /**
+     * Toggles recording.
+     */
+    public void toggleRecording() {
+        if (this.positionRecorder != null) {
+            this.positionRecorder.toggle();
+            this.window.getView().toggleRecordingFlag();
+        }
+    }
+
+    /**
      * Toggles playback.
      */
-    public void toggle() {
+    public void togglePlayback() {
         if (this.playbackController != null) {
             this.playbackController.toggle();
         }
