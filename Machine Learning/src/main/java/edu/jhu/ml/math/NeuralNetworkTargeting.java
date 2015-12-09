@@ -11,6 +11,8 @@ import java.util.Observable;
  */
 public class NeuralNetworkTargeting implements TargetingAlgorithm {
 
+    private SingleHiddenLayerNeuralNetwork neuralNetwork;
+
     /**
      * Current turret location.
      */

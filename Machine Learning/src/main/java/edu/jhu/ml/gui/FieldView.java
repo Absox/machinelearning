@@ -19,6 +19,7 @@ public class FieldView extends JPanel implements Observer {
 
     private FieldModel model;
     private double escapeAngle;
+    private boolean isRecording;
 
     /**
      * Constructs a view for a FieldModel.
