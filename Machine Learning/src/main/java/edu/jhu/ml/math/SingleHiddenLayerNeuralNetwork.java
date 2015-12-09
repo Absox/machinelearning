@@ -8,6 +8,7 @@ import org.apache.commons.math3.linear.RealVector;
 import java.util.Random;
 
 /**
+ * Artificial neural network learner with one hidden layer.
  * Created by Ran on 12/7/2015.
  */
 public class SingleHiddenLayerNeuralNetwork {

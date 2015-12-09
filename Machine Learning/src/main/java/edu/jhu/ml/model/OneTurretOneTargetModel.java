@@ -93,7 +93,7 @@ public class OneTurretOneTargetModel extends FieldModel {
         }
 
         if (this.shouldFireTurrets()) {
-            Projectile candidate = this.turret.fire(this.target, this.projectileSpeed);
+            Projectile candidate = this.turret.fire(this.target, this.projectileSpeed, this.turret.getTargetingAlgorithm().fire());
             if (candidate != null) {
                 this.projectiles.add(candidate);
                 this.shotCounter++;

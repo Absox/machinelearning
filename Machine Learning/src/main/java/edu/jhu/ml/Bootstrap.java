@@ -28,7 +28,10 @@ public class Bootstrap {
         }
 
         TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
-        facade.invokeFileControl("circular_data.txt");
+
+        //facade.invokeMouseControl();
+        facade.invokeFileControl("mouse.txt");
+        //facade.invokeFileControl("circular_data.txt");
 
     }
 

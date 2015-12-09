@@ -3,7 +3,6 @@ package edu.jhu.ml.model;
 import edu.jhu.ml.gui.GraphicalRepresentation;
 import edu.jhu.ml.math.FiringSolution;
 import edu.jhu.ml.math.TargetingAlgorithm;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
@@ -53,7 +52,7 @@ public class Turret extends Entity {
     public RealVector getRelativeVelocity(Target t) {
         RealVector targetPosition = t.getPosition();
         double angle = Math.atan2(targetPosition.getEntry(1), targetPosition.getEntry(0));
-        RealMatrix rotationMatrix = rotationMatrix(-angle);
+        RealMatrix rotationMatrix = TargetingAlgorithm.rotationMatrix(-angle);
         return rotationMatrix.operate(t.getVelocity());
     }
 
@@ -74,29 +73,27 @@ public class Turret extends Entity {
     }
 
     /**
-     * Fires the turret.
-     * @param t Target to fire at.
-     * @return Projectile.
+     * Accessor for turret's targeting algorithm.
+     * @return Targeting algorithm.
      */
-    public Projectile fire(Target t, double speed) {
-        if (this.targetingAlgorithm != null) {
-            FiringSolution f = this.targetingAlgorithm.fire();
-            RealMatrix rotationMatrix = rotationMatrix(f.getOffsetRadians());
-            RealVector displacement = rotationMatrix.operate(t.getPosition().subtract(this.position));
-            RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);
-            Projectile result = new Projectile(this.position, velocity);
-            return result;
-        }
-        return null;
+    public TargetingAlgorithm getTargetingAlgorithm() {
+        return this.targetingAlgorithm;
     }
 
     /**
-     * Computes the 2-dimensional rotation matrix, given an angle.
-     * @param angle Angle in radians.
-     * @return Rotation matrix.
+     * Fires the turret.
+     * @param target Target to fire at.
+     * @param speed Speed of projectile.
+     * @param firingSolution Firing solution.
+     * @return Projectile.
      */
-    private static RealMatrix rotationMatrix(double angle) {
-        double[][] values = {{Math.cos(angle), -Math.sin(angle)}, {Math.sin(angle), Math.cos(angle)}};
-        return new Array2DRowRealMatrix(values);
+    public Projectile fire(Target target, double speed, FiringSolution firingSolution) {
+        RealMatrix rotationMatrix = TargetingAlgorithm.rotationMatrix(firingSolution.getOffsetRadians());
+        RealVector displacement = rotationMatrix.operate(target.getPosition().subtract(this.position));
+        RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);
+        Projectile result = new Projectile(this.position, velocity);
+        return result;
     }
+
+
 }
