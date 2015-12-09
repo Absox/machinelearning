@@ -2,8 +2,10 @@ package edu.jhu.ml.controller;
 
 import edu.jhu.ml.gui.FieldView;
 import edu.jhu.ml.gui.FieldWindow;
+import edu.jhu.ml.io.PositionRecorder;
 import edu.jhu.ml.io.TargetPositionDataFile;
 import edu.jhu.ml.model.FieldModel;
+import edu.jhu.ml.model.OneTurretOneTargetModel;
 
 /**
  * Controller for field, with GUI.
@@ -14,6 +16,7 @@ public class GraphicalFieldController {
     private FieldModel model;
     private FieldWindow window;
     private GraphicalFieldPlaybackController playbackController;
+    private PositionRecorder positionRecorder;
 
     /**
      * Constructs a controller for a model.
@@ -24,6 +27,9 @@ public class GraphicalFieldController {
         this.window = window;
 
         window.addKeyListener(new GraphicalFieldKeyController(this));
+        if (model instanceof OneTurretOneTargetModel) {
+            this.positionRecorder = new PositionRecorder((OneTurretOneTargetModel)model);
+        }
     }
 
     /**

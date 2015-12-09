@@ -27,10 +27,10 @@ public class FieldView extends JPanel implements Observer {
      */
     public FieldView(FieldModel model) {
         this.setDoubleBuffered(true);
-
         model.addObserver(this);
         this.model = model;
         this.escapeAngle = Math.asin(model.getTargetSpeed()/model.getProjectileSpeed());
+        this.isRecording = false;
     }
 
     protected void paintComponent(Graphics g) {
@@ -45,6 +45,12 @@ public class FieldView extends JPanel implements Observer {
         int hits = this.model.getHitCounter();
         int shots = this.model.getShotCounter();
         g.drawString("Accuracy: " + hits + "/" + shots, 10, 10);
+
+        if (this.isRecording) {
+            g.setColor(Color.red);
+            g.drawString("RECORDING", 10, 25);
+        }
+
         this.drawMaximumEscapeArc(g);
     }
 
@@ -84,6 +90,13 @@ public class FieldView extends JPanel implements Observer {
 
         g.setColor(new Color(0f, 0f, 0f, 0.2f));
         g.fillArc(334, 100, 400, 400, (int)startingAngle, (int)Math.toDegrees(2 * escapeAngle));
+    }
+
+    /**
+     * Toggles the recording flag.
+     */
+    public void toggleRecordingFlag() {
+        this.isRecording = !this.isRecording;
     }
 
     /**
