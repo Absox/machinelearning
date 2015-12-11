@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Target extends MoveableEntity {
 
-    private double radius = 20;
+    private double radius = 30;
     private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.RED;
 
     /**

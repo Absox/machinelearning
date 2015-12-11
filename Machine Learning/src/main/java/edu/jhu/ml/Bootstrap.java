@@ -54,7 +54,7 @@ public class Bootstrap {
 
         //facade.bindTargetingAlgorithm(new LinearTargeting());
         facade.bindTargetingAlgorithm(targetingAlgorithm);
-        facade.getView().visualizeAlgorithm(targetingAlgorithm);
+        //facade.getView().visualizeAlgorithm(targetingAlgorithm);
 
         facade.invokeMouseControl();
         //facade.invokeFileControl("mouse.txt");

@@ -19,7 +19,7 @@ public abstract class FieldModel extends Observable {
     protected List<Projectile> projectiles;
     protected double targetSpeed = 5;
     protected double projectileSpeed = 20;
-    protected int turretCooldown = 30;
+    protected int turretCooldown = 15;
     protected int turretCooldownCounter = turretCooldown;
     protected int width = 1067;
     protected int height = 600;
