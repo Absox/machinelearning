@@ -74,28 +74,43 @@ public class GraphicalFieldPlaybackController {
      * Resets model.
      */
     public void restart() {
-
+        // TODO
     }
 
+    /**
+     * Runnable object for our thread. Handles advancing the model.
+     */
     private static class GraphicalFieldPlaybackRunnable implements Runnable {
 
         private GraphicalFieldPlaybackController controller;
         private FieldModel model;
         private TargetPositionDataFile playbackFile;
 
-
+        /**
+         * Constructs a runnable.
+         * @param model Model that we're controlling.
+         * @param controller Controller that we're taking input from.
+         */
         public GraphicalFieldPlaybackRunnable(FieldModel model, GraphicalFieldPlaybackController controller) {
             this.model = model;
             this.controller = controller;
         }
 
+        /**
+         * Constructs a runnable.
+         * @param model Model that we're controlling.
+         * @param controller Controller that we're taking input from.
+         * @param file File that we're using target position data from.
+         */
         public GraphicalFieldPlaybackRunnable(FieldModel model, GraphicalFieldPlaybackController controller, TargetPositionDataFile file) {
-            this.model = model;
-            this.controller = controller;
+            this(model, controller);
             this.playbackFile = file;
             System.out.println("Creating controller with file");
         }
 
+        /**
+         * Behavior of the playback thread.
+         */
         public void run() {
             OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)this.model;
             if (this.playbackFile != null) {

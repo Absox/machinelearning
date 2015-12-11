@@ -44,7 +44,7 @@ public class GraphicalFieldKeyController implements KeyListener {
      * @param e Key release event.
      */
     public void keyReleased(KeyEvent e) {
-
+        // Do nothing.
     }
 
     /**
@@ -52,7 +52,7 @@ public class GraphicalFieldKeyController implements KeyListener {
      * @param e Key typed event.
      */
     public void keyTyped(KeyEvent e) {
-
+        // Do nothing.
     }
 
 }

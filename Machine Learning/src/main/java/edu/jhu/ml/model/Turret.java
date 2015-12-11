@@ -20,6 +20,9 @@ public class Turret extends Entity {
 
     private TargetingAlgorithm targetingAlgorithm;
 
+    /**
+     * Constructs a turret at the default position.
+     */
     public Turret() {
         double[] values = {0, 0};
         this.position = new ArrayRealVector(values);

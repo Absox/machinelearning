@@ -6,6 +6,7 @@ import org.apache.commons.math3.linear.RealVector;
 import java.awt.*;
 
 /**
+ * A projectile that tracks its closest approach to a target.
  * Created by Ran on 12/10/2015.
  */
 public class TrackingProjectile extends Projectile {

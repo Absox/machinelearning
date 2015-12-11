@@ -111,6 +111,11 @@ public abstract class MoveableEntity extends Entity {
         }
     }
 
+    /**
+     * Checks if the projectile is outside of the boundaries of the field.
+     * @param model Model whose field we're checking boundaries for.
+     * @return True if we're out of bounds, else false.
+     */
     public boolean isOutOfFieldBounds(FieldModel model) {
         if (Math.abs(this.position.getEntry(0)) > model.width/2 || Math.abs(this.position.getEntry(1)) > model.height/2) {
             return true;

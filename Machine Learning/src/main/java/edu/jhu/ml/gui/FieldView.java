@@ -13,7 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * View
+ * A view for a field.
  * Created by Ran on 11/23/2015.
  */
 public class FieldView extends JPanel implements Observer {
@@ -39,6 +39,10 @@ public class FieldView extends JPanel implements Observer {
         this.isRecording = false;
     }
 
+    /**
+     * Paints the component.
+     * @param g Graphics context onto which to draw.
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Clears the frame.
