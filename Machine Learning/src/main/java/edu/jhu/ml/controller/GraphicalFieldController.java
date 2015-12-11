@@ -59,6 +59,14 @@ public class GraphicalFieldController {
     }
 
     /**
+     * Advances the model 1 frame.
+     */
+    public void advance() {
+        OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)model;
+        currentModel.advance();
+    }
+
+    /**
      * Uses target positions from file.
      * @param file Data file with target positions.
      */

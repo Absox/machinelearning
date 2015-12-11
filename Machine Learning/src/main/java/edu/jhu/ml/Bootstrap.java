@@ -1,5 +1,6 @@
 package edu.jhu.ml;
 
+import edu.jhu.ml.math.NeuralNetworkTargeting;
 import org.apache.commons.cli.*;
 
 /**
@@ -27,11 +28,17 @@ public class Bootstrap {
             return;
         }
 
-        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
+        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("Neural Targeting Test");
+        NeuralNetworkTargeting targetingAlgorithm = new NeuralNetworkTargeting(3, 5, 3);
+        facade.bindTargetingAlgorithm(targetingAlgorithm);
+        facade.getView().visualizeAlgorithm(targetingAlgorithm);
+        facade.invokeMouseControl();
 
-        //facade.invokeMouseControl();
-        facade.invokeFileControl("mouse.txt");
-        //facade.invokeFileControl("circular_data.txt");
+        /*
+        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
+        facade.bindTargetingAlgorithm(new LinearTargeting());
+        facade.invokeMouseControl();
+        */
 
     }
 

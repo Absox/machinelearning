@@ -88,6 +88,7 @@ public class Turret extends Entity {
      * @return Projectile.
      */
     public Projectile fire(Target target, double speed, FiringSolution firingSolution) {
+        if (firingSolution == null) return null;
         RealMatrix rotationMatrix = TargetingAlgorithm.rotationMatrix(firingSolution.getOffsetRadians());
         RealVector displacement = rotationMatrix.operate(target.getPosition().subtract(this.position));
         RealVector velocity = displacement.mapDivide(displacement.getNorm()).mapMultiply(speed);

@@ -75,10 +75,6 @@ public class LinearTargeting implements TargetingAlgorithm {
      * @param arg Arguments passed to notify();
      */
     public void update(Observable o, Object arg) {
-        if (o instanceof OneTurretOneTargetModel) {
-            OneTurretOneTargetModel model = (OneTurretOneTargetModel)o;
-            this.target = model.getTarget();
-            this.turret = model.getTurret();
-        }
+       // Nothing needs doing.
     }
 }

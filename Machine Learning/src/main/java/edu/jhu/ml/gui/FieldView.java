@@ -1,10 +1,14 @@
 package edu.jhu.ml.gui;
 
+import edu.jhu.ml.math.NeuralNetworkTargeting;
+import edu.jhu.ml.math.TargetingAlgorithm;
 import edu.jhu.ml.model.FieldModel;
+import edu.jhu.ml.model.TrackingProjectile;
 import org.apache.commons.math3.linear.RealVector;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,6 +22,8 @@ public class FieldView extends JPanel implements Observer {
     private static final int PREFERRED_HEIGHT = 600;
 
     private FieldModel model;
+    private TargetingAlgorithm algorithm;
+
     private double escapeAngle;
     private boolean isRecording;
 
@@ -52,6 +58,24 @@ public class FieldView extends JPanel implements Observer {
         }
 
         this.drawMaximumEscapeArc(g);
+
+        if (this.algorithm != null && this.algorithm instanceof NeuralNetworkTargeting) {
+            List<NeuralNetworkTargeting.Instance> instances = ((NeuralNetworkTargeting) this.algorithm).getInstances();
+            for (NeuralNetworkTargeting.Instance i : instances) {
+                for (TrackingProjectile p : i.getProjectiles()) {
+                    this.draw(p.getGraphicalRepresentation(), g);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Binds a targeting algorithm to visualize.
+     * @param algorithm Algorithm to visualize.
+     */
+    public void visualizeAlgorithm(TargetingAlgorithm algorithm) {
+        this.algorithm = algorithm;
     }
 
     /**
@@ -77,13 +101,16 @@ public class FieldView extends JPanel implements Observer {
      * @param g Graphics context in which to draw it.
      */
     private void draw(GraphicalRepresentation r, Graphics g) {
-
         int x = this.getWidth()/2 + r.getX() - (int)(r.getRadius() / 2);
         int y = this.getHeight()/2 - r.getY() - (int)(r.getRadius() / 2);
         g.setColor(r.getColor());
         g.fillOval(x, y, (int)r.getRadius(), (int)r.getRadius());
     }
 
+    /**
+     * Draws the maximum escape arc.
+     * @param g Graphics context on which to draw.
+     */
     private void drawMaximumEscapeArc(Graphics g) {
         RealVector targetPosition = this.model.getTargetPositions().get(0);
         double startingAngle = Math.toDegrees(Math.atan2(targetPosition.getEntry(1), targetPosition.getEntry(0)) - escapeAngle);

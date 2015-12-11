@@ -34,6 +34,8 @@ public class GraphicalFieldKeyController implements KeyListener {
             case 'r':
                 this.controller.toggleRecording();
                 break;
+            case 'n':
+                this.controller.advance();
         }
     }
 

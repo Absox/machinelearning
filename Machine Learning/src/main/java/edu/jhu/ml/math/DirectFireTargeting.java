@@ -1,5 +1,6 @@
 package edu.jhu.ml.math;
 
+import java.awt.*;
 import java.util.Observable;
 
 /**

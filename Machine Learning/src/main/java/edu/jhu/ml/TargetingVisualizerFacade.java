@@ -1,9 +1,10 @@
 package edu.jhu.ml;
 
 import edu.jhu.ml.controller.GraphicalFieldController;
+import edu.jhu.ml.gui.FieldView;
 import edu.jhu.ml.gui.FieldWindow;
 import edu.jhu.ml.io.TargetPositionDataFile;
-import edu.jhu.ml.math.LinearTargeting;
+import edu.jhu.ml.math.TargetingAlgorithm;
 import edu.jhu.ml.model.FieldModel;
 import edu.jhu.ml.model.OneTurretOneTargetModel;
 
@@ -26,10 +27,17 @@ public class TargetingVisualizerFacade {
     public TargetingVisualizerFacade(String s) {
         OneTurretOneTargetModel fieldModel = new OneTurretOneTargetModel();
         FieldWindow fieldWindow = new FieldWindow(s, fieldModel);
-        fieldModel.bindTargetingAlgorithm(new LinearTargeting());
         this.model = fieldModel;
         this.window = fieldWindow;
         this.controller = new GraphicalFieldController(fieldModel, fieldWindow);
+    }
+
+    /**
+     * Returns the view.
+     * @return FieldView that we're displaying in our window.
+     */
+    public FieldView getView() {
+        return this.window.getView();
     }
 
     /**
@@ -46,6 +54,15 @@ public class TargetingVisualizerFacade {
      */
     public GraphicalFieldController getController() {
         return this.controller;
+    }
+
+    /**
+     * Binds a targeting algorithm.
+     * @param algorithm Targeting algorithm.
+     */
+    public void bindTargetingAlgorithm(TargetingAlgorithm algorithm) {
+        OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)this.model;
+        currentModel.bindTargetingAlgorithm(algorithm);
     }
 
     /**
