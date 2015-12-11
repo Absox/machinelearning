@@ -28,17 +28,16 @@ public class Bootstrap {
             return;
         }
 
-        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("Neural Targeting Test");
-        NeuralNetworkTargeting targetingAlgorithm = new NeuralNetworkTargeting(5, 5, 3);
-        facade.bindTargetingAlgorithm(targetingAlgorithm);
-        facade.getView().visualizeAlgorithm(targetingAlgorithm);
-        facade.invokeMouseControl();
+        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("Targeting Algorithm Visualizer");
+        NeuralNetworkTargeting targetingAlgorithm = new NeuralNetworkTargeting(5, 10, 1);
 
-        /*
-        TargetingVisualizerFacade facade = new TargetingVisualizerFacade("ML Targeting Algorithm Visualizer");
-        facade.bindTargetingAlgorithm(new LinearTargeting());
+        //facade.bindTargetingAlgorithm(new LinearTargeting());
+        facade.bindTargetingAlgorithm(targetingAlgorithm);
+        //facade.getView().visualizeAlgorithm(targetingAlgorithm);
+
         facade.invokeMouseControl();
-        */
+        //facade.invokeFileControl("circular_data.txt");
+        //facade.invokeFileControl("linear_data.txt");
 
     }
 

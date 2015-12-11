@@ -65,7 +65,7 @@ public class SingleHiddenLayerNeuralNetwork {
 
         int index = 0;
         double currentMax = outputs[0];
-        for (int c = 1; c < numInputs; c++) {
+        for (int c = 1; c < numOutputs; c++) {
             if (outputs[c] > currentMax) {
                 currentMax = outputs[c];
                 index = c;

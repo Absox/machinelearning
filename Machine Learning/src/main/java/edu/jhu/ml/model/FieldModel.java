@@ -37,6 +37,22 @@ public abstract class FieldModel extends Observable {
     }
 
     /**
+     * Accessor for width of the field.
+     * @return Width of the field.
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * Accessor for height of the field.
+     * @return Height of the field.
+     */
+    public int getHeight() {
+        return this.height;
+    }
+
+    /**
      * Accessor for projectile speed.
      * @return How fast a projectile should move (in pixels per frame).
      */
