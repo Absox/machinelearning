@@ -1,12 +1,12 @@
 package edu.jhu.ml.math;
 
-import edu.jhu.ml.model.*;
+import edu.jhu.ml.model.OneTurretOneTargetModel;
+import edu.jhu.ml.model.Target;
+import edu.jhu.ml.model.TrackingProjectile;
+import edu.jhu.ml.model.Turret;
 import org.apache.commons.math3.linear.RealVector;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * Targeting algorithm that uses a neural network to determine firing solutions.
@@ -92,6 +92,10 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
             Instance currentInstance = instanceIterator.next();
             currentInstance.advance();
             if (currentInstance.isOutOfBounds()) {
+                System.out.println("Features:");
+                System.out.println(currentInstance.getFeatures());
+                System.out.println("Truths:");
+                System.out.println(Arrays.toString(currentInstance.getTruths()));
                 instanceIterator.remove();
                 continue;
             }
@@ -132,6 +136,14 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
         }
 
         /**
+         * Gets the features for this instance.
+         * @return Features.
+         */
+        public Features getFeatures() {
+            return this.features;
+        }
+
+        /**
          * Gets a list of our projectiles.
          * @return List of projectiles.
          */
@@ -162,21 +174,38 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
         }
 
         /**
-         * Gets the index of the closest projectile.
-         * @return Closest projectile.
+         * Gets the truths for this learning instance.
+         * @return Truths.
          */
-        public int getClosestProjectile() {
-            int currentClosest = 0;
-            double currentDistance = this.projectiles[0].getClosestApproachDistance();
+        public double[] getTruths() {
 
-            for (int c = 1; c < this.projectiles.length; c++) {
-                if (this.projectiles[c].getClosestApproachDistance() < currentDistance) {
-                    currentDistance = this.projectiles[c].getClosestApproachDistance();
-                    currentClosest = c;
+            double[] truths = new double[projectiles.length];
+
+            double maxDistance = projectiles[0].getClosestApproachDistance();
+            double minDistance = projectiles[0].getClosestApproachDistance();
+
+            for (int c = 1; c < projectiles.length; c++) {
+                if (projectiles[c].getClosestApproachDistance() > maxDistance) {
+                    maxDistance = projectiles[c].getClosestApproachDistance();
+                }
+                if (projectiles[c].getClosestApproachDistance() < minDistance) {
+                    minDistance = projectiles[c].getClosestApproachDistance();
                 }
             }
 
-            return currentClosest;
+            double range = maxDistance - minDistance;
+            if (range == 0) {
+                for (int c = 0; c < projectiles.length; c++) {
+                    truths[c] = 1;
+                }
+            } else {
+                for (int c = 0; c < projectiles.length; c++) {
+                    truths[c] = 1.0 - (projectiles[c].getClosestApproachDistance() - minDistance)/range;
+                }
+            }
+
+            return truths;
+
         }
 
     }
@@ -189,11 +218,31 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
         private double relativeXVelocity;
         private double relativeYVelocity;
 
+        /**
+         * Extracts features from model.
+         * @param model Model to get features from.
+         */
         public Features(OneTurretOneTargetModel model) {
             this.distance = model.getTurret().getPosition().getDistance(model.getTarget().getPosition());
             RealVector relativeVelocity = model.getTurret().getRelativeVelocity(model.getTarget());
             this.relativeXVelocity = relativeVelocity.getEntry(0);
             this.relativeYVelocity = relativeVelocity.getEntry(1);
+        }
+
+        /**
+         * Returns string representation.
+         * @return String representation of these features.
+         */
+        public String toString() {
+            StringBuilder result = new StringBuilder();
+            result.append("Distance: ");
+            result.append(distance);
+            result.append(" Relative velocity: (");
+            result.append(relativeXVelocity);
+            result.append(", ");
+            result.append(relativeYVelocity);
+            result.append(")");
+            return result.toString();
         }
     }
 

@@ -11,8 +11,8 @@ import java.awt.*;
  */
 public class Projectile extends MoveableEntity {
 
-    private static final double GRAPHICAL_REPRESENTATION_RADIUS = 5;
-    private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.BLACK;
+    protected static final double GRAPHICAL_REPRESENTATION_RADIUS = 5;
+    protected static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.BLACK;
 
     /**
      * Constructs a projectile.

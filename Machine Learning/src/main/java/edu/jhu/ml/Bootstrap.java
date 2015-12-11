@@ -29,7 +29,7 @@ public class Bootstrap {
         }
 
         TargetingVisualizerFacade facade = new TargetingVisualizerFacade("Neural Targeting Test");
-        NeuralNetworkTargeting targetingAlgorithm = new NeuralNetworkTargeting(3, 5, 3);
+        NeuralNetworkTargeting targetingAlgorithm = new NeuralNetworkTargeting(5, 5, 3);
         facade.bindTargetingAlgorithm(targetingAlgorithm);
         facade.getView().visualizeAlgorithm(targetingAlgorithm);
         facade.invokeMouseControl();

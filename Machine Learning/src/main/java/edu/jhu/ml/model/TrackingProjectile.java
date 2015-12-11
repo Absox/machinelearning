@@ -1,6 +1,9 @@
 package edu.jhu.ml.model;
 
+import edu.jhu.ml.gui.GraphicalRepresentation;
 import org.apache.commons.math3.linear.RealVector;
+
+import java.awt.*;
 
 /**
  * Created by Ran on 12/10/2015.
@@ -10,6 +13,14 @@ public class TrackingProjectile extends Projectile {
     private double closestApproachDistance;
     private Target target;
 
+    private static final Color GRAPHICAL_REPRESENTATION_COLOR = Color.BLUE;
+
+    /**
+     * Constructs a tracking projectile.
+     * @param position Position at which to initialize the projectile.
+     * @param velocity Velocity of the projectilee.
+     * @param target Target which we are tracking.
+     */
     public TrackingProjectile(RealVector position, RealVector velocity, Target target) {
         super(position, velocity);
         this.target = target;
@@ -44,6 +55,14 @@ public class TrackingProjectile extends Projectile {
      */
     public double getClosestApproachDistance() {
         return this.closestApproachDistance;
+    }
+
+    /**
+     * Gets how this entity should be drawn in a View.
+     * @return Graphical representation of this entity.
+     */
+    public GraphicalRepresentation getGraphicalRepresentation() {
+        return new GraphicalRepresentation(this.position, super.GRAPHICAL_REPRESENTATION_RADIUS, this.GRAPHICAL_REPRESENTATION_COLOR);
     }
 
 }
