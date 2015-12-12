@@ -25,6 +25,9 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
      */
     private Target target;
 
+    /**
+     * Model that we're observing.
+     */
     private OneTurretOneTargetModel model;
 
     /**
@@ -79,7 +82,6 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
         FiringSolution solution = new FiringSolution(turret, target);
         Features features = new Features(model);
         int classification = this.neuralNetwork.getClass(features.getScaledFeatures());
-        double[] outputs = this.neuralNetwork.getOutput(features.getScaledFeatures());
         solution.setOffsetRadians(-maxEscapeAngle + classification * increment);
         return solution;
     }
@@ -204,11 +206,8 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
                     truths[c] = 1.0 - (projectiles[c].getClosestApproachDistance() - minDistance)/range;
                 }
             }
-
             return truths;
-
         }
-
     }
 
     /**
@@ -229,7 +228,6 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
             RealVector relativeVelocity = model.getTurret().getRelativeVelocity(model.getTarget());
             this.relativeXVelocity = relativeVelocity.getEntry(0);
             this.relativeYVelocity = relativeVelocity.getEntry(1);
-
             this.maxDistance = Math.sqrt(Math.pow(model.getWidth() / 2, 2) + Math.pow(model.getHeight() / 2, 2));
         }
 
@@ -261,7 +259,6 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
             result[1] = relativeXVelocity / model.getProjectileSpeed();
             result[2] = relativeYVelocity / model.getProjectileSpeed();
             return result;
-
         }
     }
 

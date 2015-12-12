@@ -68,7 +68,6 @@ public abstract class MoveableEntity extends Entity {
             this.bearing = v.mapDivide(v.getNorm());
             this.speed = v.getNorm();
         }
-
     }
 
     /**
@@ -105,7 +104,6 @@ public abstract class MoveableEntity extends Entity {
                 this.setPosition(this.position.add(this.getVelocity()));
             }
         } else {
-
             this.setPosition(this.position.add(this.getVelocity()));
             //this.setVelocity(new ArrayRealVector(2)); // Nullify velocity.
         }
