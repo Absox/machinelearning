@@ -119,7 +119,6 @@ public class GraphicalFieldPlaybackController {
                     try {
                         if (this.controller.getState() == GraphicalFieldControllerState.STARTED) {
                             if (dataIterator.hasNext()) {
-
                                 RealVector nextPosition = dataIterator.next();
                                 currentModel.moveTargetTowards(nextPosition);
                                 currentModel.advance();
