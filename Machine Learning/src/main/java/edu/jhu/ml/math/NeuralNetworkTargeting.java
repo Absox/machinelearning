@@ -51,15 +51,27 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
     private List<Instance> instances;
 
     /**
+     * Queue of features.
+     */
+    private LinkedList<Features> features;
+
+    /**
+     * Length of feature queue.
+     */
+    private int memory;
+
+    /**
      * Constructor for a neural network targeting algorithm.
      * @param numOutputs Number of outputs.
      * @param numHiddenLayerNodes Number of hidden layer nodes.
      * @param learningRate Learning rate.
      */
-    public NeuralNetworkTargeting(int numOutputs, int numHiddenLayerNodes, double learningRate) {
-        this.neuralNetwork = new SingleHiddenLayerNeuralNetwork(3, numHiddenLayerNodes, numOutputs, learningRate);
+    public NeuralNetworkTargeting(int numOutputs, int numHiddenLayerNodes, double learningRate, int memory) {
+        this.neuralNetwork = new SingleHiddenLayerNeuralNetwork(3 * memory, numHiddenLayerNodes, numOutputs, learningRate);
         this.numOutputs = numOutputs;
         this.instances = new LinkedList<>();
+        this.memory = memory;
+        this.features = new LinkedList<>();
     }
 
     /**
@@ -79,11 +91,15 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
      * @return A firing solution.
      */
     public FiringSolution fire() {
-        FiringSolution solution = new FiringSolution(turret, target);
-        Features features = new Features(model);
-        int classification = this.neuralNetwork.getClass(features.getScaledFeatures());
-        solution.setOffsetRadians(-maxEscapeAngle + classification * increment);
-        return solution;
+        // We are only ready to fire if we have enough information in memory.
+        if (this.features.size() == this.memory) {
+            FiringSolution solution = new FiringSolution(turret, target);
+            int classification = this.neuralNetwork.getClass(getInputsFromFeatures(this.features));
+            solution.setOffsetRadians(-maxEscapeAngle + classification * increment);
+            return solution;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -93,18 +109,30 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
      */
     public void update(Observable o, Object arg) {
 
+        // Update all our instances.
         Iterator<Instance> instanceIterator = this.instances.iterator();
         while (instanceIterator.hasNext()) {
             Instance currentInstance = instanceIterator.next();
             currentInstance.advance();
+
+            // If all trackers in the instance are out of field bounds, the information is finalized.
             if (currentInstance.isOutOfBounds()) {
-                this.neuralNetwork.learn(currentInstance.getFeatures().getScaledFeatures(), currentInstance.getTruths());
+                // We learn from it and remove it from our list.
+                this.neuralNetwork.learn(currentInstance.getInputs(), currentInstance.getTruths());
                 instanceIterator.remove();
                 continue;
             }
         }
 
-        instances.add(new Instance());
+        this.features.add(new Features(model));
+        // If we have more features than we want, we dequeue.
+        if (this.features.size() > this.memory) {
+            this.features.remove();
+        }
+        // Add a new instance, if we have sufficient data in our queue of features.
+        if (this.features.size() == this.memory) {
+            instances.add(new Instance());
+        }
     }
 
     /**
@@ -116,19 +144,37 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
     }
 
     /**
+     * Concatenates scaled feature vectors.
+     * @param featuresList List of features.
+     * @return Array containing the concatenated scaled features of all in the list.
+     */
+    private static double[] getInputsFromFeatures(List<Features> featuresList) {
+        double[] result = new double[3 * featuresList.size()];
+
+        for (int c = 0; c < featuresList.size(); c++) {
+            double[] scaledFeatures = featuresList.get(c).getScaledFeatures();
+            result[3 * c] = scaledFeatures[0];
+            result[3 * c + 1] = scaledFeatures[1];
+            result[3 * c + 2] = scaledFeatures[2];
+        }
+
+        return result;
+    }
+
+    /**
      * Creates a learning instance.
      */
     public class Instance {
 
         private TrackingProjectile[] projectiles;
-        private Features features;
+        private double[] inputs;
 
         /**
          * Constructs an instance using current model parameters.
          */
         public Instance() {
-            // Features are set at the time at which the instance is generated.
-            this.features = new Features(model);
+            // We concatenate the scaled feature vectors into our inputs.
+            this.inputs = getInputsFromFeatures(features);
 
             projectiles = new TrackingProjectile[numOutputs];
             for (int c = 0; c < numOutputs; c++) {
@@ -139,11 +185,11 @@ public class NeuralNetworkTargeting implements TargetingAlgorithm {
         }
 
         /**
-         * Gets the features for this instance.
-         * @return Features.
+         * Accessor for input values.
+         * @return Array of input values.
          */
-        public Features getFeatures() {
-            return this.features;
+        public double[] getInputs() {
+            return this.inputs;
         }
 
         /**

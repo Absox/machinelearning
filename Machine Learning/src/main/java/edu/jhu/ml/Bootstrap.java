@@ -41,10 +41,15 @@ public class Bootstrap {
                         algorithm = new LinearTargeting();
                         break;
                     case "neural":
-                        int output = Integer.parseInt(cmd.getOptionValue("outputs"));
-                        int hidden = Integer.parseInt(cmd.getOptionValue("hidden"));
-                        double learningRate = Double.parseDouble(cmd.getOptionValue("rate"));
-                        algorithm = new NeuralNetworkTargeting(output, hidden, learningRate);
+                        int output = 5;
+                        if (cmd.hasOption("outputs")) output = Integer.parseInt(cmd.getOptionValue("outputs"));
+                        int hidden = 5;
+                        if (cmd.hasOption("hidden")) hidden = Integer.parseInt(cmd.getOptionValue("hidden"));
+                        double learningRate = 1;
+                        if (cmd.hasOption("rate")) learningRate = Double.parseDouble(cmd.getOptionValue("rate"));
+                        int memory = 1;
+                        if (cmd.hasOption("memory")) memory = Integer.parseInt(cmd.getOptionValue("memory"));
+                        algorithm = new NeuralNetworkTargeting(output, hidden, learningRate, memory);
                         break;
                     default:
                         System.err.println("Must specify a valid targeting algorithm!");
@@ -109,6 +114,10 @@ public class Bootstrap {
         Option visualize = new Option("v", "visualize", false, "Visualize targeting algorithm");
         visualize.setRequired(false);
         options.addOption(visualize);
+
+        Option memory = new Option("m", "memory", true, "Amount of memory for neural network targeting");
+        memory.setRequired(false);
+        options.addOption(memory);
 
     }
 
