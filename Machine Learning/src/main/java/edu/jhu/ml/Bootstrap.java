@@ -13,20 +13,22 @@ import org.apache.commons.cli.*;
 public class Bootstrap {
 
 
-    static Options options = new Options();
+    private static Options options = new Options();
 
     /**
      * Main method.
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
+        registerOptions();
 
         CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = null;
         TargetingAlgorithm algorithm = null;
         String filename = null;
+        boolean visualize = false;
+
         try {
-            cmd = parser.parse(options, args);
+            CommandLine cmd = parser.parse(options, args);
             if (cmd.hasOption("file")) {
                 filename = cmd.getOptionValue("file");
             }
@@ -39,34 +41,42 @@ public class Bootstrap {
                         algorithm = new LinearTargeting();
                         break;
                     case "neural":
+                        int output = Integer.parseInt(cmd.getOptionValue("outputs"));
+                        int hidden = Integer.parseInt(cmd.getOptionValue("hidden"));
+                        double learningRate = Double.parseDouble(cmd.getOptionValue("rate"));
+                        algorithm = new NeuralNetworkTargeting(output, hidden, learningRate);
                         break;
+                    default:
+                        System.err.println("Must specify a valid targeting algorithm!");
+                        System.exit(1);
                 }
+            }
+            if (cmd.hasOption("visualize")) {
+                visualize = true;
             }
 
         } catch (ParseException e) {
             System.out.println("Error in parsing options: " + e.getMessage());
-            printHelp();
+            help();
             return;
         }
 
         TargetingVisualizerFacade facade = new TargetingVisualizerFacade("Targeting Algorithm Visualizer");
-        NeuralNetworkTargeting targetingAlgorithm = new NeuralNetworkTargeting(5, 10, 1);
-
-        //facade.bindTargetingAlgorithm(new LinearTargeting());
-        facade.bindTargetingAlgorithm(targetingAlgorithm);
-        facade.getView().visualizeAlgorithm(targetingAlgorithm);
-
-        //facade.invokeMouseControl();
-        //facade.invokeFileControl("mouse.txt");
-        //facade.invokeFileControl("circular_data.txt");
-        facade.invokeFileControl("linear_data.txt");
-
+        facade.bindTargetingAlgorithm(algorithm);
+        if (visualize) {
+            facade.getView().visualizeAlgorithm(algorithm);
+        }
+        if (filename != null) {
+            facade.invokeFileControl(filename);
+        } else {
+            facade.invokeMouseControl();
+        }
     }
 
     /**
      * Prints usage guide.
      */
-    private static void printHelp() {
+    private static void help() {
         HelpFormatter help = new HelpFormatter();
         help.printHelp("Usage guide:", options);
     }
@@ -75,19 +85,29 @@ public class Bootstrap {
      * Registers command-line options.
      */
     private static void registerOptions() {
-        Option positionsFile = new Option("f", "file", false, "Target position data file");
+
+        Option positionsFile = new Option("f", "file", true, "Target position data file");
+        positionsFile.setRequired(false);
         options.addOption(positionsFile);
 
         Option algorithm = new Option("a", "algorithm", true, "Targeting algorithm");
+        algorithm.setRequired(true);
         options.addOption(algorithm);
 
-        Option numOutputs = new Option("o", "outputs", false, "Number of classes for classification");
+        Option numOutputs = new Option("o", "outputs", true, "Number of classes for classification");
+        numOutputs.setRequired(false);
         options.addOption(numOutputs);
 
-        Option numHiddenNodes = new Option("h", "hidden", false, "Number of hidden nodes for neural network");
+        Option numHiddenNodes = new Option("h", "hidden", true, "Number of hidden nodes for neural network");
+        numHiddenNodes.setRequired(false);
         options.addOption(numHiddenNodes);
 
+        Option learningRate = new Option("r", "rate", true, "Learning rate for neural network");
+        learningRate.setRequired(false);
+        options.addOption(learningRate);
+
         Option visualize = new Option("v", "visualize", false, "Visualize targeting algorithm");
+        visualize.setRequired(false);
         options.addOption(visualize);
 
     }
