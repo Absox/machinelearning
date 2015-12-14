@@ -18,10 +18,18 @@ public class Target extends MoveableEntity {
      * Default constructor for target.
      */
     public Target() {
-        double[] values = {0, 200};
         this.speed = 0;
-        this.bearing = new ArrayRealVector(values);
+        this.setToDefaultPosition();
+    }
+
+    /**
+     * Sets default conditions.
+     */
+    public void setToDefaultPosition() {
+        double[] values = {0, 200};
         this.position = new ArrayRealVector(values);
+        this.bearing = new ArrayRealVector(values);
+
     }
 
     /**

@@ -120,6 +120,13 @@ public abstract class FieldModel extends Observable {
         return this.hitCounter;
     }
 
+    /**
+     * Resets shot and hit counters.
+     */
+    public void resetShotCounters() {
+        this.shotCounter = 0;
+        this.hitCounter = 0;
+    }
 
     /**
      * Accessor for turret positions.

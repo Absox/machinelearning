@@ -115,6 +115,8 @@ public class GraphicalFieldPlaybackController {
             OneTurretOneTargetModel currentModel = (OneTurretOneTargetModel)this.model;
             if (this.playbackFile != null) {
                 Iterator<RealVector> dataIterator = this.playbackFile.getPositions().iterator();
+                int playBackCount = 0;
+
                 while (true) {
                     try {
                         if (this.controller.getState() == GraphicalFieldControllerState.STARTED) {
@@ -123,7 +125,13 @@ public class GraphicalFieldPlaybackController {
                                 currentModel.moveTargetTowards(nextPosition);
                                 currentModel.advance();
                             } else {
-                                break;
+                                playBackCount++;
+                                System.out.println("Accuracy for playback # " + playBackCount + ":");
+                                System.out.println(currentModel.getHitCounter() + "/" + currentModel.getShotCounter());
+                                currentModel.resetShotCounters();
+
+                                dataIterator = this.playbackFile.getPositions().iterator();
+                                continue;
                             }
                         }
                         Thread.sleep(16);
@@ -131,7 +139,6 @@ public class GraphicalFieldPlaybackController {
                         // Do nothing.
                     }
                 }
-                this.controller.stop();
             } else {
                 while (true) {
                     try {

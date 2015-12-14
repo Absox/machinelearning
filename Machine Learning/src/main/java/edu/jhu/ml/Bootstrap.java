@@ -51,6 +51,9 @@ public class Bootstrap {
                         if (cmd.hasOption("memory")) memory = Integer.parseInt(cmd.getOptionValue("memory"));
                         algorithm = new NeuralNetworkTargeting(output, hidden, learningRate, memory);
                         break;
+                    case "none":
+                        algorithm = null;
+                        break;
                     default:
                         System.err.println("Must specify a valid targeting algorithm!");
                         System.exit(1);
@@ -67,10 +70,13 @@ public class Bootstrap {
         }
 
         TargetingVisualizerFacade facade = new TargetingVisualizerFacade("Targeting Algorithm Visualizer");
-        facade.bindTargetingAlgorithm(algorithm);
-        if (visualize) {
-            facade.getView().visualizeAlgorithm(algorithm);
+        if (algorithm != null) {
+            facade.bindTargetingAlgorithm(algorithm);
+            if (visualize) {
+                facade.getView().visualizeAlgorithm(algorithm);
+            }
         }
+
         if (filename != null) {
             facade.invokeFileControl(filename);
         } else {

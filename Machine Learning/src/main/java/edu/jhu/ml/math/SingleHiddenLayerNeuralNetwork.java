@@ -43,7 +43,7 @@ public class SingleHiddenLayerNeuralNetwork {
      * Initializes weights randomly.
      */
     public void initialize() {
-        Random rng = new Random(0);
+        Random rng = new Random();
         for (int c = 0; c < numHiddenNodes; c++) {
             for (int d = 0; d < numInputs; d++) {
                 hiddenLayerWeights.setEntry(c, d, rng.nextDouble());
