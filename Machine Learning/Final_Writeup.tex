@@ -8,6 +8,12 @@
 \usepackage{times}
 \usepackage{latexsym}
 \usepackage{graphicx}
+\usepackage{apacite}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\cfoot{\thepage}
+
 \setlength\titlebox{6.5cm}    % Expanding the titlebox
 
 \title{Neural Networks for Predictive Ballistic Targeting}
@@ -22,6 +28,7 @@
 
 \begin{document}
 \maketitle
+
 \begin{abstract}
   This document contains the instructions for preparing a camera-ready
   manuscript for the proceedings of NAACL HLT 2010. The document itself conforms
@@ -34,7 +41,7 @@
 
 The task of ballistic targeting is such- given some input, e.g. the target's current position and velocity, one must choose a firing solution such that at some time in the future, the shot fired will intercept the target's future location. This problem is primarily important to game designers interested in improving the artificial intelligence (AI) of the turret.
 
-There are many non-machine learning (i.e linear, circular targeting) and many machine learning methods (i.e neural nets, self-organizing maps, etc) to currently solve this task \cite{Guegsen}. The current, "gold standard" for targeting methods are to compute trigonometric firing solutions using the velocity and position of the target. The two trigonometric firing solutions are linear and circular targeting; as the name implies, the linear targeting method assumes that the target will move at a constant velocity in a straight line. Similarly, the circular targeting method assumes the target is traveling in a circle of fixed radius.
+There are many non-machine learning (i.e linear, circular targeting) and many machine learning methods (i.e neural nets, self-organizing maps, etc) to currently solve this task \cite{Guesgen_anartificial}. The current, "gold standard" for targeting methods are to compute trigonometric firing solutions using the velocity and position of the target. The two trigonometric firing solutions are linear and circular targeting; as the name implies, the linear targeting method assumes that the target will move at a constant velocity in a straight line. Similarly, the circular targeting method assumes the target is traveling in a circle of fixed radius.
 
 The nature of the application of the problem is that the target can vary it's position very dramatically, especially when considering a human-controlled target. As such, it is important to use a method that is able to adapt to a changing underlying distribution of motion of the target. The limitation of the linear and circular models is that neither is able to adapt to changing types of motion since the underlying model (linear or circular motion) is fixed. Thus, we believe that an online machine learning algorithm is most suitable for the task. Since there may not necessarily be a linear relationship between the predictors and the output, and therefore, we require a method suitable for non linearly-separable data. The main advantage of an online algorithm is that it can adapt to changing underlying distributions of observed data and does not need to remain fixed in the case of the linear targeting.
 
@@ -43,11 +50,15 @@ We propose to use an artificial neural network to solve the targeting problem, a
 The features used by the neural network will be position and velocity at each time step, including a variable time step history, to predict the future motion of a target. The position and velocity will be converted to coordinates relative to the location of the turret. The relative position and velocity will then be fed into the neural network. After creating a list of possible locations of the target that cover the range of all possible locations within the bullet travel time, the output of the neural network will be the best firing solution from the candidates.
 
 \subsection{Problem Definition}
-We conceptualize the ballistic targeting problem as such:Two entities, a turret and target, exist in a two-dimensional Cartesian space. The turret has fixed position, and exists as a point, whereas the target is represented as a circle with fixed radius, and is able to move at speeds up to a limit fixed by the parameters of the model. At regular time intervals, the turret fires projectiles, which are also represented as points, are generated at the location of the turret, and have fixed speed, but can be set to move in any direction. Collisions between projectile and target occur when the position of the projectile is contained within the boundaries of the target circle and result in the destruction of the projectile. The targeting problem is to find the set of directions for the projectiles such that the number of resultant collisions is maximized.
+We conceptualize the ballistic targeting problem as such:
+Two entities, a turret and target, exist in a two-dimensional Cartesian space. The turret has fixed position, and exists as a point, whereas the target is represented as a circle with fixed radius, and is able to move at speeds up to a limit fixed by the parameters of the model. At regular time intervals, the turret fires projectiles, which are also represented as points, are generated at the location of the turret, and have fixed speed, but can be set to move in any direction. Collisions between projectile and target occur when the position of the projectile is contained within the boundaries of the target circle and result in the destruction of the projectile. The targeting problem is to find the set of directions for the projectiles such that the number of resultant collisions is maximized.
 \section{Methods}
 
 \subsection{Software Architecture}
-In order to facilitate facile human control of targets as well as visualization of targeting algorithm results, we built a graphical user interface application, according to the model-view-controller software architecture pattern. The model portion of the application centers on the FieldModel class, which contains an object representation of the Cartesian space upon which turrets, targets, and projectiles exist. The Entity abstract superclass represents all entities which have the property of a position upon the Cartesian space, and the MoveableEntity abstract superclass represents all entities which have the properties of position and velocity. These positions are evaluated at discrete time intervals.Turrets have TargetingAlgorithm objects bound to them, and at each firing invocation produce Projectile objects. The direction of these Projectile objects is determined by the TargetingAlgorithm which is bound to the Turret. Because targeting algorithms require access to the model state information in order to perform the necessary computations, we use the Observer design pattern/Java standard library interface, where the targeting algorithm is the observer, and the FieldModel is the observable. Therefore, whenever the state of the model is updated, all its observers are notified that an update has occurred, and the corresponding computations can be done for the next time-step. In our code, we include three implementations of TargetingAlgorithm: DirectTargeting, which commands that the turret should always fire at the current location of the target, LinearTargeting, which assumes that the target will always travel in straight lines with constant velocity, and returns FiringSolution objects accordingly, and NeuralNetworkTargeting, which reduces the ballistic targeting problem to a classification task, which is in turn handled by an artificial neural network learner. NeuralNetworkTargeting and its performance is the focus of this project.We use the Java Swing graphical toolkit for the view portion of our application, along with the Observer pattern. The central class of the gui package, FieldView, is an Observer of the FieldModel. Therefore, when the model state is updated, the view is notified, and can be redrawn on the screen.We have four types of controllers, one each for keyboard and mouse input, one that directly controls the FieldModel, and one that controls model playback, i.e. pauses and resumes playback. Additionally, if using target position data, rather than receiving input through the GUI, the playback controller controls the target position according to the file information. These controller objects process user input requests and invoke the appropriate methods upon model objects.
+In order to facilitate facile human control of targets as well as visualization of targeting algorithm results, we built a graphical user interface application, according to the model-view-controller software architecture pattern. The model portion of the application centers on the FieldModel class, which contains an object representation of the Cartesian space upon which turrets, targets, and projectiles exist. The Entity abstract superclass represents all entities which have the property of a position upon the Cartesian space, and the MoveableEntity abstract superclass represents all entities which have the properties of position and velocity. These positions are evaluated at discrete time intervals.
+Turrets have TargetingAlgorithm objects bound to them, and at each firing invocation produce Projectile objects. The direction of these Projectile objects is determined by the TargetingAlgorithm which is bound to the Turret. Because targeting algorithms require access to the model state information in order to perform the necessary computations, we use the Observer design pattern/Java standard library interface, where the targeting algorithm is the observer, and the FieldModel is the observable. Therefore, whenever the state of the model is updated, all its observers are notified that an update has occurred, and the corresponding computations can be done for the next time-step. In our code, we include three implementations of TargetingAlgorithm: DirectTargeting, which commands that the turret should always fire at the current location of the target, LinearTargeting, which assumes that the target will always travel in straight lines with constant velocity, and returns FiringSolution objects accordingly, and NeuralNetworkTargeting, which reduces the ballistic targeting problem to a classification task, which is in turn handled by an artificial neural network learner. NeuralNetworkTargeting and its performance is the focus of this project.
+We use the Java Swing graphical toolkit for the view portion of our application, along with the Observer pattern. The central class of the gui package, FieldView, is an Observer of the FieldModel. Therefore, when the model state is updated, the view is notified, and can be redrawn on the screen.
+We have four types of controllers, one each for keyboard and mouse input, one that directly controls the FieldModel, and one that controls model playback, i.e. pauses and resumes playback. Additionally, if using target position data, rather than receiving input through the GUI, the playback controller controls the target position according to the file information. These controller objects process user input requests and invoke the appropriate methods upon model objects.
 
 \subsection{Machine Learning Techniques}
 % Explain the methods you will be using and why they are appropriate.
@@ -56,11 +67,22 @@ Artificial Neural Networks (ANNs) are a set of models that are made up of many "
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale = 0.8]{NN.png}
-	\caption{Graphic representing ANN layers and nodes.}
+	\caption{Graphic representing ANN layers and nodes. }
 	\label{fig:NN}
 \end{figure}\\
 
-The mathematical foundation of the ANN is  
+
+
+\subsubsection{Feature Selection}
+We began by choosing a set of features to provide as input to the ANN. The features that were selected are: relative velocity, and distance from turret. The relative velocity was obtained by calculating the change in relative position between two time ticks. Since the velocity is two-dimensional, the relative velocity represents two input features. This velocity is relative to the turret (i.e. the origin of the velocity vector is the center of the turret). The distance from the turret was calculated by subtracting the distances between the target in the current frame and the turret in the current frame. Therefore, we had a total of 3 input features into our system, representing 3 input nodes. In addition to these data from the current time step, we also decided to give the ANN a variable length history of target velocities and distances. The history was managed using a queue of fixed length; as more data was obtained by the ANN, the more recent features replaced the older features.
+
+After obtaining all of the needed features, the features in the queue were concatenated and normalized so that the range of values of the features was 0 to 1. The purpose of the normalization was to warp the feature space so that it was a sphere rather than a potentially skewed ellipse (or any other shape). A spherical feature space is ideal as it allows gradient steps taken for each instance to be just as impactful as all other steps whereas for a skewed space, this may not be the case.
+
+\subsubsection{Output Firing Solution}
+The goal of our ANN is to determine the direction of the bullet that is most likely to hit the target. However, since our output from the ANN is a set of values corresponding to the number of nodes in the output layer, we must discretize the firing space. In order to do this, we calculate the range of valid directions by determining the bounds on the future location of the target. Given the bounds, we varied the number, $k$, of outputs. Each of the output nodes represented one of $k$ possible firing solutions. After forward propagation through the ANN, the values of the output nodes are normalized to obtain probabilities of each firing solution. The solution with highest probability is chosen as the best firing solution.
+
+\subsubsection{Online Learning}
+
 
 
 -feature selection
@@ -68,9 +90,7 @@ The mathematical foundation of the ANN is
 -discretizing output space
 
 \subsection{Experimental Methods}
-% What resources will you use and how will you get them?
-
-
+We assess the accuracy of a targeting algorithms as the number of shots hit (number of projectiles which collide with targets) divided by the number of shots fired (number of projectiles created). While our GUI allows for model playback using live mouse control of target, all data collected was collected using generated or recorded target position data, so that all trials could be done using the same target position data. We used three generated data sets, and two recorded from mouse input. Additionally, while our software also allows for the same data to be run for multiple loops, while preserving targeting algorithm parameters between loops, we assess accuracy only for the first encounter of the learner with the data in question, as in real-world application, an online learner would need to be able to label data on its first encounter.
 
 \section{Results}
 
@@ -93,9 +113,7 @@ The final writeup will include detailed derivations for the math involved in the
 
 We will also include screenshots at various time steps of the GUI used to display the target, turret, and bullet.
 
-
-\begin{thebibliography}
+\bibliographystyle{apacite}
 \bibliography{Final_Writeup}
-\end{thebibliography}
 
 \end{document}
