@@ -84,11 +84,6 @@ The goal of our ANN is to determine the direction of the bullet that is most lik
 \subsubsection{Online Learning}
 
 
-
--feature selection
--normalization
--discretizing output space
-
 \subsection{Experimental Methods}
 We assess the accuracy of a targeting algorithms as the number of shots hit (number of projectiles which collide with targets) divided by the number of shots fired (number of projectiles created). While our GUI allows for model playback using live mouse control of target, all data collected was collected using generated or recorded target position data, so that all trials could be done using the same target position data. We used three generated data sets, and two recorded from mouse input. Additionally, while our software also allows for the same data to be run for multiple loops, while preserving targeting algorithm parameters between loops, we assess accuracy only for the first encounter of the learner with the data in question, as in real-world application, an online learner would need to be able to label data on its first encounter.
 
