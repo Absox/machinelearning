@@ -90,16 +90,21 @@ In order to update the weights for each connection we attempt to minimize an err
 E = \frac{1}{2}\sum_k{y_k - t_k}^2 \\
 \end{align}
 where $y_k$ is the value of output node $k$ and $t_k$ is the desired value for output node $k$. In order to update the weights to minimize the error, we take the derivative of the error function with respect to $w_{ji}$ as in \eqref{eq:er_grad}.
-\begin{align} \label{eq:er_grad}
-\frac{dE}{dw_{ji}} = \frac{dE}{da_j}\frac{da_j}{dw_{ji}}\\
-a_j = \sum
-\frac{da_j}{dw{ji} = 
+\begin{align} 
+ \eqref{eq:er_grad}
+\frac{dE}{dw_{ji}} = \delta_j{z_i}\\
+\eqref{eq:delta1}
+\delta_j = \delta_{j+1}h'(z_j)\\
+\eqref{eq:delta}
+\delta_{out} = h'(z_j)(y_k - t_k)
 \end{align}
 
-We store the outputs obtained from the ANN from forward propagation; once we obtain the "truth" or target values we would like each output node to have, we find the difference $\delta_k$ between our output value and the desired value using \eqref{eq:delta}. 
-\begin{align} \label{eq:delta}
-\delta_k = y_k - t_k\\
+where $z_k$ is the value of node $k$ in a given layer after the nonlinear activation function has been applied to it. We store the outputs obtained from the ANN from forward propagation; once we obtain the "truth" or target values we would like each output node to have, we find the difference $\delta_{output}$ between our output value and the desired value using \eqref{eq:delta}. The values of $\delta$ are then backpropagated using \eqref{eq:delta1} to obtain the gradients for each weight. The weights are updated according to \eqref{eq:weight_update}.
+\begin{align} 
+\eqref{eq:weight_update}
+w_{ji}^{t+1} = w_{ji}^{t} - \eta\frac{dE}{dw_{ji}}
 \end{align}
+where $\eta$ is a variable learning rate parameter.
 
 
 \subsubsection{Feature Selection}
