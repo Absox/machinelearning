@@ -27,11 +27,7 @@
 \maketitle
 
 \begin{abstract}
-  This document contains the instructions for preparing a camera-ready
-  manuscript for the proceedings of NAACL HLT 2010. The document itself conforms
-  to its own specifications, and is therefore an example of what
-  your manuscript should look like.  Authors are asked to conform to
-  all the directions reported in this document.
+ We offer an algorithm for ballistic targeting which uses an online artificial neural network learner, and compare its targeting accuracy to existing ground truths, optimizing over certain parameters of the neural network. Ultimately we find we are able to achieve superior targeting accuracy across a wide set of data, but due to the non-convex nature of our network objective function, are unable to achieve the same maximum accuracy on certain datasets.
 \end{abstract}
 
 \section{Introduction and Background}
@@ -42,7 +38,7 @@ There are many non-machine learning (i.e linear, circular targeting) and many ma
 
 The nature of the application of the problem is that the target can vary it's position very dramatically, especially when considering a human-controlled target. As such, it is important to use a method that is able to adapt to a changing underlying distribution of motion of the target. The limitation of the linear and circular models is that neither is able to adapt to changing types of motion since the underlying model (linear or circular motion) is fixed. Thus, we believe that an online machine learning algorithm is most suitable for the task. Since there may not necessarily be a linear relationship between the predictors and the output, and therefore, we require a method suitable for non linearly-separable data. The main advantage of an online algorithm is that it can adapt to changing underlying distributions of observed data and does not need to remain fixed in the case of the linear targeting \cite{Bottou98onlinelearning}.
 
-We propose to use an artificial neural network to solve the targeting problem, as it is capable both of online learning and of classifying nonlinear data. The task at hand would be to implement a neural network algorithm that solves this task, and compare its performance against the baseline of existing non-machine learning targeting methods, e.g. linear, circular. The performance of these algorithms would then be measured using sets of targets with predefined movement patterns, as well human-controlled targets.
+We propose to use an artificial neural network to solve the targeting problem, as it is capable both of online learning and of classifying nonlinear data. The task at hand would be to implement a neural network algorithm that solves this task, and compare its performance against the baseline of existing non-machine learning targeting methods, e.g. linear, circular. The performance of these algorithms would then be measured using sets of targets with predefined movement patterns (linear, circular, composite), as well human-controlled targets.
 
 The features used by the neural network will be position and velocity at each time step, including a variable time step history, to predict the future motion of a target. The position and velocity will be converted to coordinates relative to the location of the turret. The relative position and velocity will then be fed into the neural network. After creating a list of possible locations of the target that cover the range of all possible locations within the bullet travel time, the output of the neural network will be the best firing solution from the candidates.
 
@@ -87,21 +83,21 @@ After applying the activation function \eqref{eq:activation} to each node, we re
 In order to update the weights for each connection we attempt to minimize an error function. For this scenario, we chose to use a squared loss function \eqref{eq:error}.
 
 \begin{align} \label{eq:error}
-E = \frac{1}{2}\sum_k{y_k - t_k}^2 \\
+E = \frac{1}{2}\sum_k{y_k - t_k}^2
 \end{align}
 where $y_k$ is the value of output node $k$ and $t_k$ is the desired value for output node $k$. In order to update the weights to minimize the error, we take the derivative of the error function with respect to $w_{ji}$ as in \eqref{eq:er_grad}.
 \begin{align} 
- \eqref{eq:er_grad}
+ \label{eq:er_grad}
 \frac{dE}{dw_{ji}} = \delta_j{z_i}\\
-\eqref{eq:delta1}
+\label{eq:delta1}
 \delta_j = \delta_{j+1}h'(z_j)\\
-\eqref{eq:delta}
+\label{eq:delta}
 \delta_{out} = h'(z_j)(y_k - t_k)
 \end{align}
 
 where $z_k$ is the value of node $k$ in a given layer after the nonlinear activation function has been applied to it. We store the outputs obtained from the ANN from forward propagation; once we obtain the "truth" or target values we would like each output node to have, we find the difference $\delta_{output}$ between our output value and the desired value using \eqref{eq:delta}. The values of $\delta$ are then backpropagated using \eqref{eq:delta1} to obtain the gradients for each weight. The weights are updated according to \eqref{eq:weight_update}.
 \begin{align} 
-\eqref{eq:weight_update}
+\label{eq:weight_update}
 w_{ji}^{t+1} = w_{ji}^{t} - \eta\frac{dE}{dw_{ji}}
 \end{align}
 where $\eta$ is a variable learning rate parameter.
@@ -128,27 +124,26 @@ In order for our ANN to be an online learner, it must receive a real-time input 
 We assess the accuracy of a targeting algorithms as the number of shots hit (number of projectiles which collide with targets) divided by the number of shots fired (number of projectiles created). While our GUI allows for model playback using live mouse control of target, all data collected was collected using generated or recorded target position data, so that all trials could be done using the same target position data. We used three generated data sets, and two recorded from mouse input. Additionally, while our software also allows for the same data to be run for multiple loops, while preserving targeting algorithm parameters between loops, we assess accuracy only for the first encounter of the learner with the data in question, as in real-world application, an online learner would need to be able to label data on its first encounter.
 
 \section{Results/Discussion}
+
 In situations where there is a consistent model that defines the distribution of data, online learning is not as effective as batch learning, as the online learner will have a period where it has not yet learned the parameters of the model. In the case of linear data, we see that the linear targeting algorithm clearly outperforms our online neural network. However, in cases where the linear model is not suitable, it achieves close to zero accuracy, whereas neural network targeting is still able to maintain some accuracy. One direct advantage that our online learner has over batch learners is that if we test on one dataset, and then another, whose data is labeled according to a different model, we are still able to maintain high quality predictions, whereas a batch learner would have had its parameters defined by the training data. The discrepancy in performance between linear and circular data can be explained in part by the methods used in feature selection- in circular data, relative velocity and distance remains constant, and thus, there is a consistent mapping between input and output labels for nearly the entire data set, whereas in linear data, distance and relative velocity are constantly changing.
 The number of outputs with which we initialize our neural network targeter essentially is the resolution with which we compute firing solutions. At two outputs, the targeting algorithm can only choose between firing at the extreme left and right limits of the firing arc. While this simplifies the problem, it also often removes the correct firing solution from the output space. Therefore, we see an improvement in general in accuracy as we increase the number of outputs of the neural network. However, while we do not test extremely large numbers of output classes, it stands somewhat intuitively that there exists a point beyond which no benefit is gained by increasing the number of output classes. Because of the large number of weights which are introduced as parameters into our model, we introduce more possible local minima that our gradient descent method might move towards.Increasing the memory of the neural network targeter increases the number of features which are input into the neural network. Because we restrict the number of hidden nodes, which forces the learner to produce a more simplistic representation of the input features, in theory the solution which our neural network produces neglects all non-important features. However, because we have a non-convex objective function, adding parameters merely complicates the energy landscape, and thus, there is a point at which we see decreased performance with more input features.As with memory, we see that there is a happy medium for number of hidden nodes at which we see maximum performance. This follows intuitively for artificial neural networks in general, as when we have fewer hidden nodes than input nodes, we force a more efficient representation of the features in question. However, if there are many hidden nodes, we lose this capability.
 Lastly, we choose a very high learning rate for our online neural network learner. This enables the learner to quickly adapt its parameters to the current distribution of data, and also implies that parameters learned from old data quickly decay as they are overwritten by new data. While this high learning rate often means that we overshoot the minimum with our gradient descent, the main benefit of using an online learner is in the ability to adapt to a changing distribution behind the data. Additionally, because of the way we frame the problem and define classification accuracy, higher accuracy is achieved if the learner is able to achieve some level of accuracy within a very small number of instances ? i.e. 15 or so instances, than if the learner is able to gradually converge closely to an optimal solution.
 
 \section{Comparison to Proposal}
 % What will appear in the final writeup.
-\subsection{Must achieve}
+Below is a bulleted list of what we achieved compared to our proposal:
 
-We will implement multiple neural networks for predictive AI targeting for one turret and one target including all the functions that are required for training and testing. The networks will vary in depth and number of nodes and will be compared based on their accuracy.
+\begin{itemize}
+\item
+We were successfully able to implement a neural network for the one target, one turret model (must achieve).
+\item 
+We were also able to test multiple configurations of the neural network but chose to use only a single hidden layer due to issues regarding overfitting and complexity of the problem (must achieve).
+\item 
+We created a GUI using Java and are able to visualize the motion of the target and the bullets of the turret in real time (expected to achieve).
+\item 
+We implemented the linear targeting algorithm but due to time constraints we were unable to implement the circular targeting method.
+\end{itemize}
 
-\subsection{Expected to achieve}
-
-We expect to create a GUI using Swing in Java that allows one to visualize the motion of the target and the bullets of the turret in real time.
-
-\subsection{Would like to achieve}
-
-We hope to implement a neural network for predictive targeting with multiple targets and turrets using the same neural network structure as for one target and one turret. However, we would like to explore new features outside of position and velocity at each time step. We would also like to modify our GUI in Swing to visualize this new situation.
-
-The final writeup will include detailed derivations for the math involved in the neural networks we chose, comparisons of the accuracies of the various neural network structures explored, and the performance of our optimum choice of neural network relative to linear and circular targeting.
-
-We will also include screenshots at various time steps of the GUI used to display the target, turret, and bullet.
 
 \bibliographystyle{apacite}
 \bibliography{Final_Writeup}
